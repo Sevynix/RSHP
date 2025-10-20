@@ -1,0 +1,204 @@
+#sidebar-wrapper.collapsible-sidebar {
+    width: 70px;
+    transition: width 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background: #2c3e50;
+    color: #fff;
+    overflow: hidden;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar-wrapper.collapsible-sidebar:hover {
+    width: 260px;
+}
+
+/* Sidebar Header */
+#sidebar-wrapper.collapsible-sidebar .sidebar-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+    visibility: visible;
+    width: auto;
+}
+
+#sidebar-wrapper.collapsible-sidebar:hover .sidebar-title {
+    opacity: 1;
+}
+
+/* Sidebar Navigation */
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-bottom: 0;
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+/* Hide scrollbar for WebKit browsers */
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav::-webkit-scrollbar {
+    display: none;
+}
+
+/* Navigation Items */
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li {
+    position: relative;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li.active {
+    border-left: 3px solid #ffd700 !important;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+    justify-content: flex-start;
+    border-radius: 0;
+    font-size: 0.95rem;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left-color: #ffd700;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li.active a {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-left: none !important;
+    font-weight: 600;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li a i {
+    width: 20px;
+    text-align: center;
+    margin-right: 15px;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav .nav-text {
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+    visibility: visible;
+    width: auto;
+    font-size: 0.95rem;
+    margin-left: 12px;
+}
+
+#sidebar-wrapper.collapsible-sidebar:hover .sidebar-nav .nav-text {
+    opacity: 1;
+}
+
+/* Section Dividers */
+#sidebar-wrapper.collapsible-sidebar .nav-section-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    margin: 15px 15px;
+    border-radius: 1px;
+}
+
+#sidebar-wrapper.collapsible-sidebar .nav-section-title {
+    padding: 12px 20px 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 5px 10px;
+    border-radius: 4px;
+}
+
+#sidebar-wrapper.collapsible-sidebar .nav-section-title span {
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+#sidebar-wrapper.collapsible-sidebar:hover .nav-section-title span {
+    opacity: 1;
+}
+
+/* Enhanced Hover Effects */
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li a {
+    position: relative;
+    overflow: hidden;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transition: left 0.6s ease;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li a:hover::before {
+    left: 100%;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li a i {
+    transition: all 0.3s ease;
+}
+
+#sidebar-wrapper.collapsible-sidebar .sidebar-nav li a:hover i {
+    color: #ffd700;
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #sidebar-wrapper.collapsible-sidebar {
+        width: 60px;
+    }
+    
+    #sidebar-wrapper.collapsible-sidebar:hover {
+        width: 240px;
+    }
+    
+    #page-content-wrapper {
+        margin-left: 60px;
+        width: calc(100% - 60px);
+    }
+}

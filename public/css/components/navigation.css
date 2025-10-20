@@ -1,0 +1,254 @@
+.sidebar-nav li a {
+    margin: 4px 0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.sidebar-nav li.active a {
+    background-color: var(--active-bg);
+    color: var(--active-text);
+    font-weight: 500;
+    overflow: hidden;
+}
+
+.sidebar-nav li.active .nav-text {
+    color: var(--active-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-nav li a i {
+    font-size: 1.25rem;
+    min-width: 24px;
+    text-align: center;
+}
+
+.nav-text {
+    margin-left: 12px;
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+/* Navigation Dividers */
+.nav-divider {
+    margin: 15px 0 8px 0;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-divider-text {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--secondary-text);
+    font-weight: 600;
+    padding-bottom: 8px;
+    display: block;
+}
+
+#sidebar-wrapper:not(:hover) .nav-divider {
+    display: none;
+}
+
+/* Dropdown Navigation */
+.nav-dropdown {
+    margin-bottom: 8px;
+}
+
+.nav-dropdown .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    color: var(--secondary-text);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-weight: 500;
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+}
+
+.nav-dropdown .dropdown-toggle:hover {
+    color: var(--hover-text);
+    background: var(--hover-bg);
+    border-left-color: var(--active-bg);
+}
+
+.nav-dropdown .dropdown-toggle * {
+    pointer-events: none;
+}
+
+.nav-dropdown .dropdown-arrow {
+    font-size: 0.8rem;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+}
+
+.nav-dropdown.expanded .dropdown-toggle {
+    color: var(--active-text);
+    background: var(--hover-bg);
+    border-left-color: var(--active-bg);
+}
+
+.nav-dropdown.expanded .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.nav-dropdown .collapse {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease;
+}
+
+.nav-dropdown .collapse.show {
+    max-height: 800px;
+}
+
+.nav-dropdown.expanded .collapse {
+    max-height: 800px;
+}
+
+.nav-dropdown .dropdown-menu {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    background: var(--sidebar-bg-darker);
+    border-left: 3px solid var(--active-bg);
+}
+
+.nav-dropdown .dropdown-menu li {
+    margin: 0;
+}
+
+.nav-dropdown .dropdown-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px 10px 45px;
+    color: var(--secondary-text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.nav-dropdown .dropdown-menu li a:hover {
+    color: var(--hover-text);
+    background: rgba(255, 255, 255, 0.1);
+    padding-left: 50px;
+    border-left-color: rgba(255, 255, 255, 0.4);
+}
+
+.nav-dropdown .dropdown-menu li.active a {
+    color: var(--active-text);
+    background: var(--active-bg);
+    border-left-color: #ffffff;
+}
+
+.nav-dropdown .dropdown-menu li.active a:hover {
+    background: var(--active-hover);
+}
+
+.nav-dropdown .dropdown-menu li a i {
+    margin-right: 12px;
+    width: 16px;
+    text-align: center;
+}
+
+/* Hide dropdowns when sidebar is collapsed */
+#sidebar-wrapper:not(:hover) .nav-dropdown .dropdown-arrow {
+    display: none;
+}
+
+#sidebar-wrapper:not(:hover) .nav-dropdown .collapse {
+    display: none !important;
+}
+
+/* Remove old dropdown styles */
+.nav-dropdown,
+.dropdown-toggle,
+.dropdown-arrow,
+.collapse,
+.dropdown-menu {
+    display: none !important;
+}
+
+/* Sidebar Hover Styles */
+.sidebar-nav li a {
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-nav li a:hover {
+    color: var(--hover-text);
+    background-color: var(--hover-bg);
+    transform: none;
+}
+
+#sidebar-wrapper:hover {
+    width: var(--sidebar-width-expanded);
+}
+
+#wrapper #sidebar-wrapper:hover ~ #page-content-wrapper {
+    margin-left: var(--sidebar-width-expanded);
+}
+
+#sidebar-wrapper:hover .sidebar-title,
+#sidebar-wrapper:hover .nav-text,
+#sidebar-wrapper:hover .search-box input,
+#sidebar-wrapper:hover .user-info {
+    opacity: 1;
+    visibility: visible;
+    width: auto;
+    pointer-events: auto;
+    transition-delay: 0.15s;
+}
+
+#sidebar-wrapper:hover .sidebar-header {
+    justify-content: flex-start;
+    padding: 1.5rem 1.25rem;
+}
+
+#sidebar-wrapper:hover .sidebar-header .sidebar-logo {
+    margin-right: 0.5rem;
+}
+
+#sidebar-wrapper:hover .search-box {
+    justify-content: flex-start;
+    padding: 0.6rem 1rem;
+    gap: 0.8rem;
+}
+
+#sidebar-wrapper:hover .sidebar-nav li a {
+    justify-content: flex-start;
+    padding: 0.9rem 1rem;
+    gap: 1rem;
+    max-width: 100%;
+}
+
+#sidebar-wrapper:hover .nav-text {
+    max-width: calc(var(--sidebar-width-expanded) - 120px);
+}
+
+/* Handle long menu text */
+.sidebar-nav li a .nav-text {
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.sidebar-nav li a[href*="kodetindakanterapi"] .nav-text,
+.sidebar-nav li a[href*="datakategoriklinis"] .nav-text {
+    font-size: 0.85rem;
+}
+
+#sidebar-wrapper:hover .sidebar-footer {
+    justify-content: space-between;
+    padding: 1rem;
+}

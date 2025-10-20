@@ -1,0 +1,113 @@
+.form-wrapper-test {
+    background: white;
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.form-info-panel {
+    background: var(--active-bg);
+    color: white;
+    padding: 2rem;
+    width: 35%;
+    background: linear-gradient(45deg, var(--active-bg), #0056b3);
+    color: var(--primary-text);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-info-panel h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.form-info-panel p {
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+}
+
+.form-body {
+    padding: 2rem;
+    flex: 1;
+}
+
+/* Form Controls */
+.form-control {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    margin-top: 0.25rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 0.25rem;
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.custom-checkbox label {
+    cursor: pointer;
+    font-weight: 500;
+    margin-bottom: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.custom-checkbox label.text-primary {
+    color: var(--table-header-bg) !important;
+}
+
+.custom-checkbox label.text-danger {
+    color: var(--status-inactive) !important;
+}
+
+.custom-checkbox:hover label {
+    transform: translateX(2px);
+}
+
+/* Form Switch */
+.form-switch .form-check-input {
+    cursor: pointer;
+    height: 1.25rem;
+    width: 2.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid #dee2e6;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: var(--status-active);
+    border-color: var(--status-active);
+}
+
+.form-switch .form-check-input:not(:checked) {
+    background-color: #e9ecef;
+}
+
+.form-check-input {
+    cursor: pointer;
+    border: 2px solid #dee2e6;
+}
+
+.form-check-input:checked {
+    background-color: var(--table-header-bg);
+    border-color: var(--table-header-bg);
+}
