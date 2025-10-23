@@ -6,7 +6,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="fs-4 mb-0">Manajemen Jenis Hewan</h3>
-    <a href="{{ route('admin.jenis-hewan.create') }}" class="btn btn-primary">
+    <a href="{{ route('admin.jenishewan.create') }}" class="btn btn-primary">
         <i class="fas fa-plus-circle me-2"></i>Tambah Jenis Hewan
     </a>
 </div>
@@ -45,10 +45,10 @@
                         <span class="badge bg-info">{{ $jenis->ras_hewan_count }} Ras</span>
                     </td>
                     <td>
-                        <a href="{{ route('admin.jenis-hewan.edit', $jenis->idjenis_hewan) }}" class="btn btn-sm btn-warning">
+                        <a href="{{ route('admin.jenishewan.edit', $jenis->idjenis_hewan) }}" class="btn btn-sm btn-warning">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <form action="{{ route('admin.jenis-hewan.destroy', $jenis->idjenis_hewan) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jenis hewan ini?')">
+                        <form action="{{ route('admin.jenishewan.destroy', $jenis->idjenis_hewan) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jenis hewan ini?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">

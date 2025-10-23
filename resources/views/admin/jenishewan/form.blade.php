@@ -14,7 +14,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form action="{{ isset($jenisHewan) ? route('admin.jenis-hewan.update', $jenisHewan->idjenis_hewan) : route('admin.jenis-hewan.store') }}" method="POST">
+                <form action="{{ isset($jenisHewan) ? route('admin.jenishewan.update', $jenisHewan->idjenis_hewan) : route('admin.jenishewan.store') }}" method="POST">
                     @csrf
                     @if(isset($jenisHewan))
                         @method('PUT')
@@ -38,7 +38,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save me-2"></i>Simpan
                         </button>
-                        <a href="{{ route('admin.jenis-hewan.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('admin.jenishewan.index') }}" class="btn btn-secondary">
                             <i class="fas fa-times me-2"></i>Batal
                         </a>
                     </div>

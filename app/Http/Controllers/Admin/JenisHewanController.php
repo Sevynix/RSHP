@@ -13,12 +13,12 @@ class JenisHewanController extends Controller
         $jenisHewanList = JenisHewan::withCount('rasHewan')
             ->orderBy('nama_jenis_hewan', 'asc')
             ->get();
-        return view('admin.jenis-hewan.index', compact('jenisHewanList'));
+        return view('admin.jenishewan.index', compact('jenisHewanList'));
     }
 
     public function create()
     {
-        return view('admin.jenis-hewan.form');
+        return view('admin.jenishewan.form');
     }
 
     public function store(Request $request)
@@ -31,13 +31,13 @@ class JenisHewanController extends Controller
             'nama_jenis_hewan' => $request->nama_jenis_hewan,
         ]);
 
-        return redirect()->route('admin.jenis-hewan.index')->with('success', 'Jenis Hewan berhasil ditambahkan!');
+        return redirect()->route('admin.jenishewan.index')->with('success', 'Jenis Hewan berhasil ditambahkan!');
     }
 
     public function edit($id)
     {
         $jenisHewan = JenisHewan::findOrFail($id);
-        return view('admin.jenis-hewan.form', compact('jenisHewan'));
+        return view('admin.jenishewan.form', compact('jenisHewan'));
     }
 
     public function update(Request $request, $id)
@@ -51,7 +51,7 @@ class JenisHewanController extends Controller
             'nama_jenis_hewan' => $request->nama_jenis_hewan,
         ]);
 
-        return redirect()->route('admin.jenis-hewan.index')->with('success', 'Jenis Hewan berhasil diupdate!');
+        return redirect()->route('admin.jenishewan.index')->with('success', 'Jenis Hewan berhasil diupdate!');
     }
 
     public function destroy($id)
@@ -59,6 +59,6 @@ class JenisHewanController extends Controller
         $jenisHewan = JenisHewan::findOrFail($id);
         $jenisHewan->delete();
 
-        return redirect()->route('admin.jenis-hewan.index')->with('success', 'Jenis Hewan berhasil dihapus!');
+        return redirect()->route('admin.jenishewan.index')->with('success', 'Jenis Hewan berhasil dihapus!');
     }
 }
