@@ -40,7 +40,7 @@
                             <span>Role yang Dimiliki</span>
                         </div>
                         <ul class="list-group list-group-flush">
-                            @if(empty($assignedRoles))
+                            @if(count($assignedRoles) == 0)
                                 <li class="list-group-item text-muted">
                                     <i class="fas fa-info-circle me-2"></i>Belum ada role yang ditugaskan
                                 </li>
@@ -52,11 +52,12 @@
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" 
                                                        type="checkbox" 
-                                                       name="toggle_role_{{ $role->idrole }}" 
+                                                       name="role_status[{{ $role->idrole }}]" 
                                                        id="toggle_{{ $role->idrole }}"
-                                                       {{ $role->pivot->status_aktif == 1 ? 'checked' : '' }}>
+                                                       value="1"
+                                                       {{ $role->status_aktif == 1 ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="toggle_{{ $role->idrole }}">
-                                                    {{ $role->pivot->status_aktif == 1 ? 'Aktif' : 'Nonaktif' }}
+                                                    {{ $role->status_aktif == 1 ? 'Aktif' : 'Nonaktif' }}
                                                 </label>
                                             </div>
                                             <button type="submit" 

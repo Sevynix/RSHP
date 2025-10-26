@@ -14,13 +14,13 @@ class RasHewanController extends Controller
         $rasHewanList = RasHewan::with('jenisHewan')
             ->orderBy('nama_ras', 'asc')
             ->get();
-        return view('admin.ras-hewan.index', compact('rasHewanList'));
+        return view('admin.rashewan.index', compact('rasHewanList'));
     }
 
     public function create()
     {
         $jenisHewanList = JenisHewan::orderBy('nama_jenis_hewan', 'asc')->get();
-        return view('admin.ras-hewan.form', compact('jenisHewanList'));
+        return view('admin.rashewan.form', compact('jenisHewanList'));
     }
 
     public function store(Request $request)
@@ -35,14 +35,14 @@ class RasHewanController extends Controller
             'idjenis_hewan' => $request->idjenis_hewan,
         ]);
 
-        return redirect()->route('admin.ras-hewan.index')->with('success', 'Ras Hewan berhasil ditambahkan!');
+        return redirect()->route('admin.rashewan.index')->with('success', 'Ras Hewan berhasil ditambahkan!');
     }
 
     public function edit($id)
     {
         $rasHewan = RasHewan::with('jenisHewan')->findOrFail($id);
         $jenisHewanList = JenisHewan::orderBy('nama_jenis_hewan', 'asc')->get();
-        return view('admin.ras-hewan.form', compact('rasHewan', 'jenisHewanList'));
+        return view('admin.rashewan.form', compact('rasHewan', 'jenisHewanList'));
     }
 
     public function update(Request $request, $id)
@@ -58,7 +58,7 @@ class RasHewanController extends Controller
             'idjenis_hewan' => $request->idjenis_hewan,
         ]);
 
-        return redirect()->route('admin.ras-hewan.index')->with('success', 'Ras Hewan berhasil diupdate!');
+        return redirect()->route('admin.rashewan.index')->with('success', 'Ras Hewan berhasil diupdate!');
     }
 
     public function destroy($id)
@@ -66,6 +66,6 @@ class RasHewanController extends Controller
         $rasHewan = RasHewan::findOrFail($id);
         $rasHewan->delete();
 
-        return redirect()->route('admin.ras-hewan.index')->with('success', 'Ras Hewan berhasil dihapus!');
+        return redirect()->route('admin.rashewan.index')->with('success', 'Ras Hewan berhasil dihapus!');
     }
 }

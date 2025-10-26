@@ -39,14 +39,16 @@
                     <td>{{ $userData['iduser'] }}</td>
                     <td>{{ $userData['nama'] }}</td>
                     <td>
-                        @if(empty($userData['roles']))
+                        @if(count($userData['roles']) == 0)
                             <span class="badge bg-secondary">Belum ada role</span>
                         @else
                             @foreach($userData['roles'] as $role)
                                 <span class="badge bg-{{ $role['status_aktif'] == 1 ? 'success' : 'warning' }} me-1">
-                                    {{ $role['nama_role'] }}
+                                    {{ strtoupper($role['nama_role']) }}
                                     @if($role['status_aktif'] == 0)
-                                        (Nonaktif)
+                                        (NONAKTIF)
+                                    @else
+                                        (AKTIF)
                                     @endif
                                 </span>
                             @endforeach

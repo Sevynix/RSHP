@@ -23,7 +23,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="fs-4 mb-0">Manajemen Ras Hewan</h3>
-    <a href="{{ route('admin.ras-hewan.create') }}" class="btn btn-primary">
+    <a href="{{ route('admin.rashewan.create') }}" class="btn btn-primary">
         <i class="fas fa-plus-circle me-2"></i>Tambah Ras Hewan
     </a>
 </div>
@@ -74,10 +74,10 @@
                         @endif
                         <td>{{ $ras->nama_ras }}</td>
                         <td>
-                            <a href="{{ route('admin.ras-hewan.edit', $ras->idras_hewan) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('admin.rashewan.edit', $ras->idras_hewan) }}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            <form action="{{ route('admin.ras-hewan.destroy', $ras->idras_hewan) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus ras hewan ini?')">
+                            <form action="{{ route('admin.rashewan.destroy', $ras->idras_hewan) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus ras hewan ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">
@@ -89,7 +89,7 @@
                     @endforeach
                     <tr class="add-ras-row">
                         <td colspan="2" class="text-center">
-                            <a href="{{ route('admin.ras-hewan.create', ['jenis' => $firstRas->idjenis_hewan]) }}" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ route('admin.rashewan.create', ['jenis' => $firstRas->idjenis_hewan]) }}" class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-plus me-1"></i>Tambah Ras untuk {{ $jenisNama }}
                             </a>
                         </td>

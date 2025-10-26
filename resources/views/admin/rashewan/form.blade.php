@@ -14,7 +14,7 @@
                 </h5>
             </div>
             <div class="card-body">
-                <form action="{{ isset($rasHewan) ? route('admin.ras-hewan.update', $rasHewan->idras_hewan) : route('admin.ras-hewan.store') }}" method="POST">
+                <form action="{{ isset($rasHewan) ? route('admin.rashewan.update', $rasHewan->idras_hewan) : route('admin.rashewan.store') }}" method="POST">
                     @csrf
                     @if(isset($rasHewan))
                         @method('PUT')
@@ -57,7 +57,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save me-2"></i>Simpan
                         </button>
-                        <a href="{{ route('admin.ras-hewan.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('admin.rashewan.index') }}" class="btn btn-secondary">
                             <i class="fas fa-times me-2"></i>Batal
                         </a>
                     </div>

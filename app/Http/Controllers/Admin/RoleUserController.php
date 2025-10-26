@@ -17,7 +17,7 @@ class RoleUserController extends Controller
         }
 
         $usersWithRoles = User::with(['roleUsers.role'])
-            ->orderBy('iduser', 'desc')
+            ->orderBy('iduser', 'asc')
             ->get()
             ->map(function ($user) {
                 return [
@@ -28,7 +28,7 @@ class RoleUserController extends Controller
                         return [
                             'idrole' => $roleUser->idrole,
                             'nama_role' => $roleUser->role->nama_role ?? 'Unknown',
-                            'status_aktif' => $roleUser->status_aktif,
+                            'status_aktif' => $roleUser->status == '1' ? 1 : 0,
                         ];
                     }),
                 ];
@@ -55,7 +55,7 @@ class RoleUserController extends Controller
         $assignedRoles = $allRoles->filter(function ($role) use ($userRoleIds, $userRoles) {
             if (in_array($role->idrole, $userRoleIds)) {
                 $roleUser = $userRoles->firstWhere('idrole', $role->idrole);
-                $role->status_aktif = $roleUser->status_aktif;
+                $role->status_aktif = $roleUser->status == '1' ? 1 : 0;
                 return true;
             }
             return false;
@@ -89,7 +89,7 @@ class RoleUserController extends Controller
                 RoleUser::create([
                     'iduser' => $iduser,
                     'idrole' => $idrole,
-                    'status_aktif' => 1,
+                    'status' => '1',
                 ]);
             }
 
@@ -114,10 +114,10 @@ class RoleUserController extends Controller
             $currentRoles = RoleUser::where('iduser', $iduser)->get();
 
             foreach ($currentRoles as $roleUser) {
-                $newStatus = isset($roleStatuses[$roleUser->idrole]) && $roleStatuses[$roleUser->idrole] == '1' ? 1 : 0;
+                $newStatus = isset($roleStatuses[$roleUser->idrole]) && $roleStatuses[$roleUser->idrole] == '1' ? '1' : '0';
                 
                 $roleUser->update([
-                    'status_aktif' => $newStatus,
+                    'status' => $newStatus,
                 ]);
             }
 

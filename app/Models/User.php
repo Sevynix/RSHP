@@ -48,12 +48,26 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Get all roles through the pivot table (many-to-many)
+     */
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_user', 'iduser', 'idrole')
                     ->withPivot('status');
     }
 
+    /**
+     * Get all role_user pivot records for this user
+     */
+    public function roleUsers()
+    {
+        return $this->hasMany(RoleUser::class, 'iduser', 'iduser');
+    }
+
+    /**
+     * Get the pemilik record if this user is a pet owner
+     */
     public function pemilik()
     {
         return $this->hasOne(Pemilik::class, 'iduser', 'iduser');
