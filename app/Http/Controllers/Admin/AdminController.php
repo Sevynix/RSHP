@@ -9,7 +9,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        if (!session('logged_in') || session('role') !== 'Administrator') {
+        if (!session('is_admin')) {
             return redirect()->route('login')->with('error', 'Akses ditolak. Anda harus login sebagai admin.');
         }
 

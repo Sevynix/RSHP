@@ -48,19 +48,35 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('login.post') }}">
+                    <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label">
                                 Email
                             </label>
-                            <input type="email" id="email" name="email" class="form-control" required placeholder="Masukkan email Anda" value="{{ old('email') }}">                    
+                            <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" required placeholder="Masukkan email Anda" value="{{ old('email') }}" autofocus>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">
                                 Password
                             </label>
-                            <input type="password" id="password" name="password" class="form-control" required placeholder="Masukkan password Anda">
+                            <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" required placeholder="Masukkan password Anda">
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <label class="form-check-label" for="remember">
+                                Ingat Saya
+                            </label>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">
                             Login
