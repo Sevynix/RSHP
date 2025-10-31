@@ -13,16 +13,18 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\Admin\PetController;
 use App\Http\Controllers\Admin\PemilikController;
+use App\Http\Controllers\Dokter\DokterController;
+use App\Http\Controllers\Perawat\PerawatController;
+use App\Http\Controllers\Resepsionis\ResepsionisController;
 
 Route::get('/', [RshpController::class, 'home']);
 Route::get('/layanan', [RshpController::class, 'layanan']);
 Route::get('/visimisi', [RshpController::class, 'visimisi']);
 Route::get('/struktur', [RshpController::class, 'struktur']);
 
-// Laravel UI Authentication Routes
 Auth::routes(['register' => false, 'reset' => false, 'verify' => false]);
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['role:admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     
     Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
@@ -85,4 +87,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/pemilik/store-new', [PemilikController::class, 'storeNew'])->name('pemilik.store-new');
     Route::post('/pemilik/store-existing', [PemilikController::class, 'storeExisting'])->name('pemilik.store-existing');
     Route::delete('/pemilik/{id}', [PemilikController::class, 'destroy'])->name('pemilik.destroy');
+});
+
+Route::prefix('dokter')->name('dokter.')->middleware(['role:dokter'])->group(function () {
+    Route::get('/dashboard', [DokterController::class, 'dashboard'])->name('dashboard');
+});
+
+Route::prefix('perawat')->name('perawat.')->middleware(['role:perawat'])->group(function () {
+    Route::get('/dashboard', [PerawatController::class, 'dashboard'])->name('dashboard');
+});
+
+Route::prefix('resepsionis')->name('resepsionis.')->middleware(['role:resepsionis'])->group(function () {
+    Route::get('/dashboard', [ResepsionisController::class, 'dashboard'])->name('dashboard');
 });

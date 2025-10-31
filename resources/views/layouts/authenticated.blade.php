@@ -15,7 +15,6 @@
 </head>
 <body>
     <div id="wrapper">
-        {{-- Collapsible Sidebar --}}
         <aside id="sidebar-wrapper" class="collapsible-sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
@@ -24,16 +23,14 @@
                 </div>
             </div>
             
-            {{-- Dynamic Sidebar Menu --}}
             <ul class="sidebar-nav">
                 @yield('sidebar-menu')
             </ul>
             
-            {{-- Sidebar Footer with User Info --}}
             <div class="sidebar-footer">
                 <div class="user-profile">
                     <div class="user-info">
-                        <span class="user-name">{{ session('nama', 'User') }}</span>
+                        <span class="user-name">{{ session('user_name', Auth::user()->nama ?? 'User') }}</span>
                         <span class="user-role">@yield('user-role', 'User')</span>
                     </div>
                 </div>
@@ -46,9 +43,7 @@
             </div>
         </aside>
         
-        {{-- Page Content Wrapper --}}
         <div id="page-content-wrapper">
-            {{-- Top Navigation Bar --}}
             <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 px-4 shadow-sm">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-align-left text-dark fs-4 me-3" style="cursor: pointer;"></i>
@@ -58,16 +53,14 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <span class="navbar-text fw-bold">
-                                Welcome, {{ session('nama', 'User') }}
+                                Welcome, {{ session('user_name', Auth::user()->nama ?? 'User') }}
                             </span>
                         </li>
                     </ul>
                 </div>
             </nav>
             
-            {{-- Main Content Area --}}
             <main class="container-fluid px-4 py-3">
-                {{-- Flash Messages --}}
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
@@ -95,7 +88,6 @@
                     </div>
                 @endif
 
-                {{-- Page Content --}}
                 @yield('content')
             </main>
         </div>

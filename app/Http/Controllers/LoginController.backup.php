@@ -9,18 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
 
-/**
- * BACKUP FILE - Custom LoginController (Before Laravel UI Migration)
- * Created: October 27, 2025
- * 
- * This file contains the original custom three-tier authentication logic
- * before migrating to Laravel UI authentication system.
- * 
- * Three-tier authentication flow:
- * 1. User with active role (status = '1')
- * 2. Pemilik (pet owner)
- * 3. Regular user
- */
 
 class LoginController extends Controller
 {
