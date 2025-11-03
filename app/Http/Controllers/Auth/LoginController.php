@@ -43,6 +43,25 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
+        // If user is already logged in, redirect to appropriate dashboard
+        if (session('logged_in')) {
+            $userRole = session('user_role');
+            
+            if ($userRole == 1) {
+                return redirect('admin/dashboard');
+            } elseif ($userRole == 2) {
+                return redirect('dokter/dashboard');
+            } elseif ($userRole == 3) {
+                return redirect('perawat/dashboard');
+            } elseif ($userRole == 4) {
+                return redirect('resepsionis/dashboard');
+            } elseif (session('idpemilik')) {
+                return redirect('pemilik/dashboard');
+            }
+            
+            return redirect('/');
+        }
+        
         return view('login');
     }
 
@@ -141,13 +160,16 @@ class LoginController extends Controller
         if ($userWithRole && Auth::attempt($credentials, $request->filled('remember'))) {
             // Set custom session data for role-based user
             $request->session()->put([
+                'logged_in' => true,
                 'user_id' => $userWithRole->iduser,
                 'user_name' => $userWithRole->nama,
                 'user_email' => $userWithRole->email,
                 'user_role' => $userWithRole->idrole,
                 'role_name' => $userWithRole->nama_role ?? 'User',
                 'user_status' => 'active',
-                'is_admin' => (strtolower($userWithRole->nama_role ?? '') === 'administrator')
+                'is_admin' => (strtolower($userWithRole->nama_role ?? '') === 'administrator'),
+                'nama' => $userWithRole->nama,
+                'role' => $userWithRole->nama_role ?? 'User'
             ]);
 
             // Force session save
@@ -175,6 +197,7 @@ class LoginController extends Controller
         if ($pemilik && Auth::attempt($credentials, $request->filled('remember'))) {
             // Set custom session data for pemilik
             $request->session()->put([
+                'logged_in' => true,
                 'user_id' => $pemilik->iduser,
                 'user_name' => $pemilik->nama,
                 'user_email' => $pemilik->email,
@@ -182,7 +205,9 @@ class LoginController extends Controller
                 'role_name' => 'Pemilik',
                 'idpemilik' => $pemilik->idpemilik,
                 'user_status' => 'active',
-                'is_admin' => false
+                'is_admin' => false,
+                'nama' => $pemilik->nama,
+                'role' => 'Pemilik'
             ]);
 
             return true;
@@ -197,13 +222,16 @@ class LoginController extends Controller
             
             // Set custom session data for regular user
             $request->session()->put([
+                'logged_in' => true,
                 'user_id' => $user->iduser,
                 'user_name' => $user->nama,
                 'user_email' => $user->email,
                 'user_role' => null,
                 'role_name' => 'User',
                 'user_status' => 'active',
-                'is_admin' => false
+                'is_admin' => false,
+                'nama' => $user->nama,
+                'role' => 'User'
             ]);
 
             return true;

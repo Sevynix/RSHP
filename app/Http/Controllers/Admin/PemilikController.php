@@ -15,7 +15,8 @@ class PemilikController extends Controller
 {
     public function index()
     {
-        if (!session('is_admin')) {
+        // Only allow admin (role 1)
+        if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 
@@ -28,7 +29,7 @@ class PemilikController extends Controller
 
     public function create()
     {
-        if (!session('is_admin')) {
+        if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 
@@ -41,7 +42,7 @@ class PemilikController extends Controller
 
     public function storeNew(Request $request)
     {
-        if (!session('is_admin')) {
+        if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 
@@ -93,7 +94,8 @@ class PemilikController extends Controller
 
     public function storeExisting(Request $request)
     {
-        if (!session('is_admin')) {
+        // Only allow admin (role 1)
+        if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 
@@ -135,7 +137,8 @@ class PemilikController extends Controller
 
     public function destroy($id)
     {
-        if (!session('is_admin')) {
+        // Only allow admin (role 1)
+        if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 

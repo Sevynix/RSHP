@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\PemilikController;
 use App\Http\Controllers\Dokter\DokterController;
 use App\Http\Controllers\Perawat\PerawatController;
 use App\Http\Controllers\Resepsionis\ResepsionisController;
+use App\Http\Controllers\Resepsionis\TemuDokterController;
 
 Route::get('/', [RshpController::class, 'home']);
 Route::get('/layanan', [RshpController::class, 'layanan']);
@@ -91,12 +92,48 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin'])->group(functi
 
 Route::prefix('dokter')->name('dokter.')->middleware(['role:dokter'])->group(function () {
     Route::get('/dashboard', [DokterController::class, 'dashboard'])->name('dashboard');
+    
+    // Rekam Medis routes (View Only)
+    Route::get('/rekammedis', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'index'])->name('rekammedis.index');
+    Route::get('/rekammedis/{id}', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'show'])->name('rekammedis.show');
 });
 
 Route::prefix('perawat')->name('perawat.')->middleware(['role:perawat'])->group(function () {
     Route::get('/dashboard', [PerawatController::class, 'dashboard'])->name('dashboard');
+    
+    // Rekam Medis routes
+    Route::get('/rekammedis', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'index'])->name('rekammedis.index');
+    Route::get('/rekammedis/create', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'create'])->name('rekammedis.create');
+    Route::post('/rekammedis', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'store'])->name('rekammedis.store');
+    Route::get('/rekammedis/{id}', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'show'])->name('rekammedis.show');
+    Route::get('/rekammedis/{id}/edit', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'edit'])->name('rekammedis.edit');
+    Route::put('/rekammedis/{id}', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'update'])->name('rekammedis.update');
+    Route::delete('/rekammedis/{id}', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'destroy'])->name('rekammedis.destroy');
+    Route::get('/rekammedis/{id}/adddetail', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'addDetail'])->name('rekammedis.adddetail');
+    Route::post('/rekammedis/{id}/adddetail', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'storeDetail'])->name('rekammedis.storedetail');
 });
 
 Route::prefix('resepsionis')->name('resepsionis.')->middleware(['role:resepsionis'])->group(function () {
     Route::get('/dashboard', [ResepsionisController::class, 'dashboard'])->name('dashboard');
+    
+    // Temu Dokter routes
+    Route::get('/temudokter', [TemuDokterController::class, 'index'])->name('temudokter.index');
+    Route::get('/temudokter/create', [TemuDokterController::class, 'create'])->name('temudokter.create');
+    Route::post('/temudokter', [TemuDokterController::class, 'store'])->name('temudokter.store');
+    Route::post('/temudokter/complete', [TemuDokterController::class, 'complete'])->name('temudokter.complete');
+    
+    // Pemilik routes
+    Route::get('/pemilik', [\App\Http\Controllers\Resepsionis\PemilikController::class, 'index'])->name('pemilik.index');
+    Route::get('/pemilik/create', [\App\Http\Controllers\Resepsionis\PemilikController::class, 'create'])->name('pemilik.create');
+    Route::post('/pemilik/store-new', [\App\Http\Controllers\Resepsionis\PemilikController::class, 'storeNew'])->name('pemilik.storeNew');
+    Route::post('/pemilik/store-existing', [\App\Http\Controllers\Resepsionis\PemilikController::class, 'storeExisting'])->name('pemilik.storeExisting');
+    Route::delete('/pemilik/{id}', [\App\Http\Controllers\Resepsionis\PemilikController::class, 'destroy'])->name('pemilik.destroy');
+    
+    // Pet routes
+    Route::get('/pet', [\App\Http\Controllers\Resepsionis\PetController::class, 'index'])->name('pet.index');
+    Route::get('/pet/create', [\App\Http\Controllers\Resepsionis\PetController::class, 'create'])->name('pet.create');
+    Route::post('/pet', [\App\Http\Controllers\Resepsionis\PetController::class, 'store'])->name('pet.store');
+    Route::get('/pet/{id}/edit', [\App\Http\Controllers\Resepsionis\PetController::class, 'edit'])->name('pet.edit');
+    Route::put('/pet/{id}', [\App\Http\Controllers\Resepsionis\PetController::class, 'update'])->name('pet.update');
+    Route::delete('/pet/{id}', [\App\Http\Controllers\Resepsionis\PetController::class, 'destroy'])->name('pet.destroy');
 });

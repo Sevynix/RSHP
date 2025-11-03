@@ -11,6 +11,12 @@
             <span class="nav-text">Dashboard</span>
         </a>
     </li>
+    <li class="{{ request()->routeIs('dokter.rekammedis.*') ? 'active' : '' }}">
+        <a href="{{ route('dokter.rekammedis.index') }}">
+            <i class="fas fa-file-medical"></i>
+            <span class="nav-text">Rekam Medis</span>
+        </a>
+    </li>
 @endsection
 
 @section('content')
@@ -94,6 +100,9 @@
         <div class="card shadow">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">Rekam Medis Terbaru</h6>
+                <a href="{{ route('dokter.rekammedis.index') }}" class="btn btn-sm btn-primary">
+                    Lihat Semua
+                </a>
             </div>
             <div class="card-body">
                 @if(!empty($recentRecords) && $recentRecords->count() > 0)

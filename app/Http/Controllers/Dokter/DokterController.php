@@ -53,7 +53,7 @@ class DokterController extends Controller
                 ->join('pemilik as pm', 'p.idpemilik', '=', 'pm.idpemilik')
                 ->join('user as u', 'pm.iduser', '=', 'u.iduser')
                 ->join('jenis_hewan as jh', 'p.idjenis_hewan', '=', 'jh.idjenis_hewan')
-                ->leftJoin('user as doc', 'rm.iddokter_pemeriksa', '=', 'doc.iduser')
+                ->leftJoin('user as doc', 'rm.dokter_pemeriksa', '=', 'doc.iduser')
                 ->where('td.idrole_user', $roleUser->idrole_user)
                 ->select(
                     'rm.idrekam_medis',

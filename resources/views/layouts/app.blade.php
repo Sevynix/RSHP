@@ -15,6 +15,9 @@
     nav { background:#f8f9fa; padding:.75rem 1rem; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,.1); position:sticky; top:0; z-index:1000; height:var(--nav-height); display:flex; align-items:center; justify-content:center }
         nav a{ color:#0073e6; text-decoration:none; margin:0 1rem; padding:.5rem 1rem; border-radius:5px; transition:background .3s }
         nav a:hover{ background:#0073e6; color:#fff }
+        .btn-logout{ color:#dc3545; background:none; border:none; cursor:pointer; padding:.5rem 1rem; border-radius:5px; transition:background .3s; font:inherit; margin:0 1rem; text-decoration:none; }
+        .btn-logout:hover{ background:#dc3545; color:#fff }
+        .user-info{ color:#333; margin:0 1rem; font-weight:500; }
         section{ max-width:1200px; margin:0 auto; padding:2rem }
         section h2{ color:#0073e6; border-bottom:2px solid #0073e6; padding-bottom:.5rem; margin-bottom:1.5rem }
         .struktur{ display:block; text-align:center }
@@ -41,15 +44,13 @@
         <a href="{{ url('/struktur') }}">Struktur Organisasi</a>
         <a href="{{ url('/layanan') }}">Layanan Umum</a>
         <a href="{{ url('/visimisi') }}">Visi & Misi</a>
-        @if(session('logged_in'))
-            <span style="color: #0073e6; margin: 0 1rem;">{{ session('nama') }} ({{ session('role') }})</span>
-            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                @csrf
-                <button type="submit" style="color:#0073e6; background:none; border:none; cursor:pointer; padding:.5rem 1rem; border-radius:5px; transition:background .3s; font:inherit;">Logout</button>
-            </form>
-        @else
-            <a href="{{ route('login') }}">Login</a>
-        @endif
+        <a href="{{ route('login') }}">Login</a>
+        @auth
+        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+            @csrf
+            <button type="submit" class="btn-logout">Logout</button>
+        </form>
+        @endauth
     </nav>
 
     <main>

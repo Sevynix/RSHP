@@ -11,6 +11,12 @@
             <span class="nav-text">Dashboard</span>
         </a>
     </li>
+    <li class="{{ request()->routeIs('perawat.rekammedis.*') ? 'active' : '' }}">
+        <a href="{{ route('perawat.rekammedis.index') }}">
+            <i class="fas fa-file-medical"></i>
+            <span class="nav-text">Rekam Medis</span>
+        </a>
+    </li>
 @endsection
 
 @section('content')
@@ -114,7 +120,7 @@
                         </table>
                     </div>
                     <div class="text-center mt-3">
-                        <a href="#" class="btn btn-primary">
+                        <a href="{{ route('perawat.rekammedis.index') }}" class="btn btn-primary">
                             <i class="fas fa-clipboard-list me-1"></i>Lihat Semua Rekam Medis
                         </a>
                     </div>

@@ -1,17 +1,7 @@
-@extends('layouts.authenticated')
+@extends('layouts.resepsionis')
 
 @section('title', 'Dashboard Resepsionis')
 @section('page-title', 'Dashboard Resepsionis')
-@section('user-role', 'Resepsionis')
-
-@section('sidebar-menu')
-    <li class="{{ request()->routeIs('resepsionis.dashboard') ? 'active' : '' }}">
-        <a href="{{ route('resepsionis.dashboard') }}">
-            <i class="fas fa-tachometer-alt"></i>
-            <span class="nav-text">Dashboard</span>
-        </a>
-    </li>
-@endsection
 
 @section('content')
 <div class="container-fluid">
