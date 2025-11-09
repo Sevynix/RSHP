@@ -19,28 +19,6 @@
         </div>
     </div>
     
-    @if(session('success'))
-    <div class="row mb-3">
-        <div class="col-12">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        </div>
-    </div>
-    @endif
-    
-    @if(session('error'))
-    <div class="row mb-3">
-        <div class="col-12">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        </div>
-    </div>
-    @endif
-    
     <!-- Daftar Antrian -->
     <div class="row">
         <div class="col-12">
@@ -56,9 +34,9 @@
                                     <th scope="col" class="text-center">#</th>
                                     <th scope="col" class="text-center">Tanggal</th>
                                     <th scope="col" class="text-center">Waktu</th>
-                                    <th scope="col">Pemilik</th>
-                                    <th scope="col">Pet</th>
-                                    <th scope="col">Dokter</th>
+                                    <th scope="col" class="text-center">Pemilik</th>
+                                    <th scope="col" class="text-center">Pet</th>
+                                    <th scope="col" class="text-center">Dokter</th>
                                     <th scope="col" class="text-center">Status</th>
                                     <th scope="col" class="text-center">Aksi</th>
                                 </tr>
@@ -66,13 +44,13 @@
                             <tbody>
                                 @forelse($antrianList as $antrian)
                                 <tr class="{{ $antrian->status == '2' ? 'table-success opacity-75' : '' }}">
-                                    <th scope="row">{{ $antrian->no_urut }}</th>
-                                    <td>{{ \Carbon\Carbon::parse($antrian->waktu_daftar)->format('d-m-Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($antrian->waktu_daftar)->format('H:i') }}</td>
-                                    <td>{{ $antrian->nama_pemilik }}</td>
-                                    <td>{{ $antrian->nama_pet }}</td>
-                                    <td>{{ $antrian->nama_dokter }}</td>
-                                    <td>
+                                    <td class="text-center">{{ $antrian->no_urut }}</td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($antrian->waktu_daftar)->format('d-m-Y') }}</td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($antrian->waktu_daftar)->format('H:i') }}</td>
+                                    <td class="text-center">{{ $antrian->nama_pemilik }}</td>
+                                    <td class="text-center">{{ $antrian->nama_pet }}</td>
+                                    <td class="text-center">{{ $antrian->nama_dokter }}</td>
+                                    <td class="text-center">
                                         @if($antrian->status == '1')
                                             <span class="badge bg-warning text-dark">
                                                 <i class="fas fa-clock me-1"></i>Menunggu

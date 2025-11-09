@@ -25,7 +25,7 @@
                 @else
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
-                        <p class="mb-0">Password untuk user <strong>{{ $user->nama }}</strong> akan direset ke default: <strong>password123</strong></p>
+                        <p class="mb-0">Password untuk user <strong>{{ $user->nama }}</strong> akan direset ke default: <strong>123456</strong></p>
                     </div>
                     
                     <form action="{{ route('admin.users.reset-password.confirm', $user->iduser) }}" method="POST" class="mt-4">

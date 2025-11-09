@@ -143,6 +143,6 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('admin.users.index')
-            ->with('success', "Password user {$user->nama} berhasil direset menjadi 'password123'");
+            ->with('success', "Password user {$user->nama} berhasil direset menjadi '123456'");
     }
 }
