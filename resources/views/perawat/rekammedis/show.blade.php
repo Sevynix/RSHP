@@ -1,4 +1,4 @@
-@extends('layouts.authenticated')
+@extends('layouts.main')
 
 @section('title', 'Detail Rekam Medis')
 @section('page-title', 'Detail Rekam Medis')

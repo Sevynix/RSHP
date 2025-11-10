@@ -1,4 +1,4 @@
-@extends('layouts.authenticated')
+@extends('layouts.main')
 
 @section('title', 'Data Rekam Medis')
 @section('page-title', 'Data Rekam Medis')
@@ -115,9 +115,9 @@
                                         <i class="fas fa-plus"></i>
                                     </a>
                                     <button type="button" 
-                                            class="btn btn-sm btn-danger" 
+                                            class="btn btn-sm btn-danger delete-btn" 
                                             title="Hapus"
-                                            onclick="confirmDelete({{ $record->idrekam_medis }})">
+                                            data-id="{{ $record->idrekam_medis }}">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -146,13 +146,21 @@
 
 @push('scripts')
 <script>
-function confirmDelete(id) {
-    if (confirm('Apakah Anda yakin ingin menghapus rekam medis ini?')) {
-        const form = document.getElementById('delete-form');
-        form.action = '{{ url("perawat/rekammedis") }}/' + id;
-        form.submit();
-    }
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            
+            if (confirm('Apakah Anda yakin ingin menghapus rekam medis ini?')) {
+                const form = document.getElementById('delete-form');
+                form.action = '/perawat/rekammedis/' + id;
+                form.submit();
+            }
+        });
+    });
+});
 </script>
 @endpush
 @endsection

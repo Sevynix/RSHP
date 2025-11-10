@@ -1,4 +1,4 @@
-@extends('layouts.authenticated')
+@extends('layouts.main')
 
 @section('title', 'Tambah Detail Tindakan')
 @section('page-title', 'Tambah Detail Tindakan')
@@ -49,24 +49,21 @@
                         <p class="mb-0"><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($record->created_at)->format('d/m/Y H:i') }}</p>
                     </div>
 
-                    <!-- Filter Kategori Form -->
-                    <form method="GET" action="{{ route('perawat.rekammedis.adddetail', $record->idrekam_medis) }}" class="mb-3">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="kategori_filter" class="form-label">Filter Kategori</label>
-                                <select class="form-select" id="kategori_filter" name="kategori_filter" onchange="this.form.submit()">
-                                    <option value="">Semua Kategori</option>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category->idkategori }}" 
-                                                {{ request('kategori_filter') == $category->idkategori ? 'selected' : '' }}>
-                                            {{ $category->nama_kategori }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <small class="text-muted">Pilih kategori untuk memfilter tindakan</small>
-                            </div>
+                    <!-- Filter Kategori -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="kategori_filter" class="form-label">Filter Kategori</label>
+                            <select class="form-select" id="kategori_filter">
+                                <option value="">Semua Kategori</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->idkategori }}">
+                                        {{ $category->nama_kategori }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <small class="text-muted">Pilih kategori untuk memfilter tindakan</small>
                         </div>
-                    </form>
+                    </div>
 
                     <!-- Main Form -->
                     <form action="{{ route('perawat.rekammedis.storedetail', $record->idrekam_medis) }}" method="POST">
@@ -79,26 +76,20 @@
                                         id="idkode_tindakan_terapi" 
                                         name="idkode_tindakan_terapi" required>
                                     <option value="">Pilih Kode Tindakan</option>
-                                    @php
-                                        $selectedCategory = request('kategori_filter');
-                                        $filteredCount = 0;
-                                    @endphp
                                     @foreach($treatmentCodes as $code)
-                                        @if(!$selectedCategory || $code->idkategori == $selectedCategory)
-                                            @php $filteredCount++; @endphp
-                                            <option value="{{ $code->idkode_tindakan_terapi }}"
-                                                    {{ old('idkode_tindakan_terapi') == $code->idkode_tindakan_terapi ? 'selected' : '' }}>
-                                                {{ $code->kode }} - {{ $code->deskripsi_tindakan_terapi }}
-                                                @if($code->kategori)
-                                                    ({{ $code->kategori->nama_kategori }})
-                                                @endif
-                                            </option>
-                                        @endif
+                                        <option value="{{ $code->idkode_tindakan_terapi }}"
+                                                data-kategori="{{ $code->idkategori }}"
+                                                {{ old('idkode_tindakan_terapi') == $code->idkode_tindakan_terapi ? 'selected' : '' }}>
+                                            {{ $code->kode }} - {{ $code->deskripsi_tindakan_terapi }}
+                                            @if($code->kategori)
+                                                ({{ $code->kategori->nama_kategori }})
+                                            @endif
+                                        </option>
                                     @endforeach
-                                    @if($filteredCount == 0 && $selectedCategory)
-                                        <option value="" disabled>Tidak ada kode tindakan untuk kategori ini</option>
-                                    @endif
                                 </select>
+                                <div id="filter-info" class="text-muted small mt-1" style="display: none;">
+                                    Menampilkan <span id="filtered-count">0</span> dari {{ count($treatmentCodes) }} kode tindakan
+                                </div>
                                 @error('idkode_tindakan_terapi')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -134,4 +125,56 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const kategoriFilter = document.getElementById('kategori_filter');
+    const kodeTindakanSelect = document.getElementById('idkode_tindakan_terapi');
+    const filterInfo = document.getElementById('filter-info');
+    const filteredCount = document.getElementById('filtered-count');
+    
+    // Simpan semua option asli
+    const allOptions = Array.from(kodeTindakanSelect.options);
+    
+    kategoriFilter.addEventListener('change', function() {
+        const selectedKategori = this.value;
+        
+        // Reset select
+        kodeTindakanSelect.innerHTML = '<option value="">Pilih Kode Tindakan</option>';
+        
+        let count = 0;
+        
+        // Filter dan tambahkan option yang sesuai
+        allOptions.forEach(option => {
+            if (option.value === '') return; // Skip placeholder
+            
+            const optionKategori = option.getAttribute('data-kategori');
+            
+            // Tampilkan jika tidak ada filter atau kategori cocok
+            if (!selectedKategori || optionKategori === selectedKategori) {
+                kodeTindakanSelect.appendChild(option.cloneNode(true));
+                count++;
+            }
+        });
+        
+        // Update info
+        if (selectedKategori) {
+            filteredCount.textContent = count;
+            filterInfo.style.display = 'block';
+            
+            if (count === 0) {
+                const noDataOption = document.createElement('option');
+                noDataOption.value = '';
+                noDataOption.disabled = true;
+                noDataOption.textContent = 'Tidak ada kode tindakan untuk kategori ini';
+                kodeTindakanSelect.appendChild(noDataOption);
+            }
+        } else {
+            filterInfo.style.display = 'none';
+        }
+    });
+});
+</script>
+@endpush
 @endsection

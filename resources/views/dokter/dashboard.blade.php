@@ -1,4 +1,4 @@
-@extends('layouts.authenticated')
+@extends('layouts.main')
 
 @section('title', 'Dashboard Dokter')
 @section('page-title', 'Dashboard Dokter')

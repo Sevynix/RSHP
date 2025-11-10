@@ -1,4 +1,4 @@
-﻿@extends('layouts.authenticated')
+﻿@extends('layouts.main')
 
 @section('user-role', 'Administrator')
 
