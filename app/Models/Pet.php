@@ -50,6 +50,18 @@ class Pet extends Model
         return $this->hasMany(\App\Models\TemuDokter::class, 'idpet', 'idpet');
     }
 
+    public function rekamMedis()
+    {
+        return $this->hasManyThrough(
+            RekamMedis::class,
+            TemuDokter::class,
+            'idpet', // Foreign key on temu_dokter table
+            'idreservasi_dokter', // Foreign key on rekam_medis table
+            'idpet', // Local key on pet table
+            'idreservasi_dokter' // Local key on temu_dokter table
+        );
+    }
+
     public function scopeWithRelations($query)
     {
         return $query->with([

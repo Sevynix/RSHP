@@ -11,10 +11,22 @@
             <span class="nav-text">Dashboard</span>
         </a>
     </li>
+    <li class="{{ request()->routeIs('perawat.data-pasien') ? 'active' : '' }}">
+        <a href="{{ route('perawat.data-pasien') }}">
+            <i class="fas fa-paw"></i>
+            <span class="nav-text">Data Pasien</span>
+        </a>
+    </li>
     <li class="{{ request()->routeIs('perawat.rekammedis.*') ? 'active' : '' }}">
         <a href="{{ route('perawat.rekammedis.index') }}">
             <i class="fas fa-file-medical"></i>
             <span class="nav-text">Rekam Medis</span>
+        </a>
+    </li>
+    <li class="{{ request()->routeIs('perawat.profil*') ? 'active' : '' }}">
+        <a href="{{ route('perawat.profil') }}">
+            <i class="fas fa-user-circle"></i>
+            <span class="nav-text">Profil</span>
         </a>
     </li>
 @endsection

@@ -31,9 +31,11 @@ class PemilikController extends Controller
         }
 
         $existingUsers = DB::table('user')
-            ->leftJoin('role_user', 'user.iduser', '=', 'role_user.iduser')
-            ->whereNull('role_user.iduser')
+            ->whereNotIn('iduser', function ($query) {
+                $query->select('iduser')->from('pemilik');
+            })
             ->select('user.iduser', 'user.nama', 'user.email')
+            ->orderBy('user.nama')
             ->get();
 
         return view('resepsionis.addpemilik', compact('existingUsers'));

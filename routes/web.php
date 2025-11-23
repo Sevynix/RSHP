@@ -13,8 +13,10 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\Admin\PetController;
 use App\Http\Controllers\Admin\PemilikController;
-use App\Http\Controllers\Dokter\DokterController;
-use App\Http\Controllers\Perawat\PerawatController;
+use App\Http\Controllers\DokterController;
+use App\Http\Controllers\PerawatController;
+use App\Http\Controllers\Dokter\DokterController as DokterDashboardController;
+use App\Http\Controllers\Perawat\PerawatController as PerawatDashboardController;
 use App\Http\Controllers\Resepsionis\ResepsionisController;
 use App\Http\Controllers\Resepsionis\TemuDokterController;
 
@@ -88,18 +90,50 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin'])->group(functi
     Route::post('/pemilik/store-new', [PemilikController::class, 'storeNew'])->name('pemilik.store-new');
     Route::post('/pemilik/store-existing', [PemilikController::class, 'storeExisting'])->name('pemilik.store-existing');
     Route::delete('/pemilik/{id}', [PemilikController::class, 'destroy'])->name('pemilik.destroy');
+
+    // Dokter & Perawat Management
+    Route::resource('dokter', DokterController::class);
+    Route::resource('perawat', PerawatController::class);
 });
 
 Route::prefix('dokter')->name('dokter.')->middleware(['role:dokter'])->group(function () {
-    Route::get('/dashboard', [DokterController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [DokterDashboardController::class, 'dashboard'])->name('dashboard');
     
-    // Rekam Medis routes (View Only)
+    // Data Pasien route
+    Route::get('/data-pasien', [DokterDashboardController::class, 'dataPasien'])->name('data-pasien');
+    
+    // Profil routes
+    Route::get('/profil', [DokterDashboardController::class, 'profil'])->name('profil');
+    Route::get('/profil/edit', [DokterDashboardController::class, 'editProfil'])->name('profil.edit');
+    Route::put('/profil', [DokterDashboardController::class, 'updateProfil'])->name('profil.update');
+    
+    // Rekam Medis routes
     Route::get('/rekammedis', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'index'])->name('rekammedis.index');
+    Route::get('/rekammedis/create', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'create'])->name('rekammedis.create');
+    Route::post('/rekammedis', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'store'])->name('rekammedis.store');
     Route::get('/rekammedis/{id}', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'show'])->name('rekammedis.show');
+    Route::get('/rekammedis/{id}/edit', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'edit'])->name('rekammedis.edit');
+    Route::put('/rekammedis/{id}', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'update'])->name('rekammedis.update');
+    Route::delete('/rekammedis/{id}', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'destroy'])->name('rekammedis.destroy');
+    
+    // Detail Rekam Medis routes (CRUD)
+    Route::get('/rekammedis/{id}/adddetail', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'addDetail'])->name('rekammedis.adddetail');
+    Route::post('/rekammedis/{id}/adddetail', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'storeDetail'])->name('rekammedis.storedetail');
+    Route::get('/detailrekammedis/{id}/edit', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'editDetail'])->name('detailrekammedis.edit');
+    Route::put('/detailrekammedis/{id}', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'updateDetail'])->name('detailrekammedis.update');
+    Route::delete('/detailrekammedis/{id}', [\App\Http\Controllers\Dokter\RekamMedisController::class, 'destroyDetail'])->name('detailrekammedis.destroy');
 });
 
 Route::prefix('perawat')->name('perawat.')->middleware(['role:perawat'])->group(function () {
-    Route::get('/dashboard', [PerawatController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [PerawatDashboardController::class, 'dashboard'])->name('dashboard');
+    
+    // Data Pasien route
+    Route::get('/data-pasien', [PerawatDashboardController::class, 'dataPasien'])->name('data-pasien');
+    
+    // Profil routes
+    Route::get('/profil', [PerawatDashboardController::class, 'profil'])->name('profil');
+    Route::get('/profil/edit', [PerawatDashboardController::class, 'editProfil'])->name('profil.edit');
+    Route::put('/profil', [PerawatDashboardController::class, 'updateProfil'])->name('profil.update');
     
     // Rekam Medis routes
     Route::get('/rekammedis', [\App\Http\Controllers\Perawat\RekamMedisController::class, 'index'])->name('rekammedis.index');
@@ -136,4 +170,14 @@ Route::prefix('resepsionis')->name('resepsionis.')->middleware(['role:resepsioni
     Route::get('/pet/{id}/edit', [\App\Http\Controllers\Resepsionis\PetController::class, 'edit'])->name('pet.edit');
     Route::put('/pet/{id}', [\App\Http\Controllers\Resepsionis\PetController::class, 'update'])->name('pet.update');
     Route::delete('/pet/{id}', [\App\Http\Controllers\Resepsionis\PetController::class, 'destroy'])->name('pet.destroy');
+});
+
+Route::prefix('pemilik')->name('pemilik.')->middleware(['role:pemilik'])->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Pemilik\PemilikController::class, 'dashboard'])->name('dashboard');
+    Route::get('/jadwal', [\App\Http\Controllers\Pemilik\PemilikController::class, 'jadwal'])->name('jadwal');
+    Route::get('/rekam-medis', [\App\Http\Controllers\Pemilik\PemilikController::class, 'rekamMedis'])->name('rekam-medis');
+    Route::get('/profil', [\App\Http\Controllers\Pemilik\PemilikController::class, 'profil'])->name('profil');
+    Route::get('/profil/edit', [\App\Http\Controllers\Pemilik\PemilikController::class, 'editProfil'])->name('edit-profil');
+    Route::put('/profil', [\App\Http\Controllers\Pemilik\PemilikController::class, 'updateProfil'])->name('update-profil');
+    Route::get('/pets', [\App\Http\Controllers\Pemilik\PemilikController::class, 'pets'])->name('pets');
 });

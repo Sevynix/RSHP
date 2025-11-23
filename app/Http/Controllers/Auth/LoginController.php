@@ -117,7 +117,7 @@ class LoginController extends Controller
 
         $userRole = session('user_role');
         
-        Log::info('sendLoginResponse - redirecting', ['user_role' => $userRole]);
+        Log::info('sendLoginResponse - redirecting', ['user_role' => $userRole, 'idpemilik' => session('idpemilik')]);
 
         // Route based on role ID
         if ($userRole == 1 || $userRole === '1') {
@@ -128,7 +128,7 @@ class LoginController extends Controller
             return redirect('perawat/dashboard');
         } elseif ($userRole == 4 || $userRole === '4') {
             return redirect('resepsionis/dashboard');
-        } elseif (session('idpemilik')) {
+        } elseif ($userRole == 5 || $userRole === '5' || session('idpemilik')) {
             return redirect('pemilik/dashboard');
         }
         
@@ -201,13 +201,21 @@ class LoginController extends Controller
                 'user_id' => $pemilik->iduser,
                 'user_name' => $pemilik->nama,
                 'user_email' => $pemilik->email,
-                'user_role' => null,
+                'user_role' => 5, // Role ID for pemilik
                 'role_name' => 'Pemilik',
                 'idpemilik' => $pemilik->idpemilik,
                 'user_status' => 'active',
                 'is_admin' => false,
                 'nama' => $pemilik->nama,
                 'role' => 'Pemilik'
+            ]);
+
+            // Force session save
+            $request->session()->save();
+
+            Log::info('User logged in as pemilik', [
+                'user_id' => $pemilik->iduser,
+                'idpemilik' => $pemilik->idpemilik
             ]);
 
             return true;
@@ -300,7 +308,8 @@ class LoginController extends Controller
             return redirect('perawat/dashboard');
         } elseif ($userRole == 4 || $userRole === '4') {
             return redirect('resepsionis/dashboard');
-        } elseif (session('idpemilik')) {
+        } elseif ($userRole == 5 || $userRole === '5' || session('idpemilik')) {
+            Log::info('Redirecting to pemilik dashboard');
             return redirect('pemilik/dashboard');
         }
         

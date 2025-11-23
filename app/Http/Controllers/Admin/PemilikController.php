@@ -35,7 +35,10 @@ class PemilikController extends Controller
 
         $availableUsers = User::whereNotIn('iduser', function ($query) {
             $query->select('iduser')->from('pemilik');
-        })->orderBy('nama')->get();
+        })
+        ->select('iduser', 'nama', 'email')
+        ->orderBy('nama')
+        ->get();
 
         return view('admin.pemilik.create', compact('availableUsers'));
     }

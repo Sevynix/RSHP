@@ -11,10 +11,22 @@
             <span class="nav-text">Dashboard</span>
         </a>
     </li>
+    <li class="{{ request()->routeIs('dokter.data-pasien') ? 'active' : '' }}">
+        <a href="{{ route('dokter.data-pasien') }}">
+            <i class="fas fa-paw"></i>
+            <span class="nav-text">Data Pasien</span>
+        </a>
+    </li>
     <li class="{{ request()->routeIs('dokter.rekammedis.*') ? 'active' : '' }}">
         <a href="{{ route('dokter.rekammedis.index') }}">
             <i class="fas fa-file-medical"></i>
             <span class="nav-text">Rekam Medis</span>
+        </a>
+    </li>
+    <li class="{{ request()->routeIs('dokter.profil*') ? 'active' : '' }}">
+        <a href="{{ route('dokter.profil') }}">
+            <i class="fas fa-user-circle"></i>
+            <span class="nav-text">Profil</span>
         </a>
     </li>
 @endsection
@@ -104,6 +116,10 @@
                                     <a href="{{ route('dokter.rekammedis.show', $record->idrekam_medis) }}" 
                                        class="btn btn-sm btn-info" title="Lihat Detail">
                                         <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('dokter.rekammedis.adddetail', $record->idrekam_medis) }}" 
+                                       class="btn btn-sm btn-success" title="Tambah Tindakan">
+                                        <i class="fas fa-plus"></i>
                                     </a>
                                 </div>
                             </td>

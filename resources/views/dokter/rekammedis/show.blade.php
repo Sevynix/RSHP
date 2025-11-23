@@ -11,6 +11,33 @@
             <span class="nav-text">Dashboard</span>
         </a>
     </li>
+    <li class="{{ request()->routeIs('dokter.data-pasien') ? 'active' : '' }}">
+        <a href="{{ route('dokter.data-pasien') }}">
+            <i class="fas fa-paw"></i>
+            <span class="nav-text">Data Pasien</span>
+        </a>
+    </li>
+    <li class="{{ request()->routeIs('dokter.rekammedis.*') ? 'active' : '' }}">
+        <a href="{{ route('dokter.rekammedis.index') }}">
+            <i class="fas fa-file-medical"></i>
+            <span class="nav-text">Rekam Medis</span>
+        </a>
+    </li>
+    <li class="{{ request()->routeIs('dokter.profil*') ? 'active' : '' }}">
+        <a href="{{ route('dokter.profil') }}">
+            <i class="fas fa-user-circle"></i>
+            <span class="nav-text">Profil</span>
+        </a>
+    </li>
+@endsection
+
+@section('sidebar-menu')
+    <li class="{{ request()->routeIs('dokter.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('dokter.dashboard') }}">
+            <i class="fas fa-tachometer-alt"></i>
+            <span class="nav-text">Dashboard</span>
+        </a>
+    </li>
     <li class="{{ request()->routeIs('dokter.rekammedis.*') ? 'active' : '' }}">
         <a href="{{ route('dokter.rekammedis.index') }}">
             <i class="fas fa-file-medical"></i>
@@ -101,10 +128,16 @@
                 </div>
 
                 <!-- Detail Tindakan -->
-                @if($details->count() > 0)
                 <div class="row">
                     <div class="col-12 mb-3">
-                        <h6 class="text-primary">Detail Tindakan</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="text-primary mb-0">Detail Tindakan</h6>
+                            <a href="{{ route('dokter.rekammedis.adddetail', $record->idrekam_medis) }}" 
+                               class="btn btn-sm btn-success">
+                                <i class="fas fa-plus me-1"></i>Tambah Detail
+                            </a>
+                        </div>
+                        @if($details->count() > 0)
                         <div class="table-responsive">
                             <table class="table table-bordered">
                                 <thead class="table-light">
@@ -113,6 +146,7 @@
                                         <th>Nama Tindakan</th>
                                         <th>Kategori</th>
                                         <th>Detail</th>
+                                        <th width="150">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -128,14 +162,35 @@
                                                 <small class="text-muted">-</small>
                                             @endif
                                         </td>
+                                        <td>
+                                            <a href="{{ route('dokter.detailrekammedis.edit', $detail->iddetail_rekam_medis) }}" 
+                                               class="btn btn-sm btn-warning" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="{{ route('dokter.detailrekammedis.destroy', $detail->iddetail_rekam_medis) }}" 
+                                                  method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" 
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus detail tindakan ini?')"
+                                                        title="Hapus">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
+                        @else
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Belum ada detail tindakan. Klik tombol "Tambah Detail" untuk menambahkan tindakan.
+                        </div>
+                        @endif
                     </div>
                 </div>
-                @endif
 
                 <hr class="my-4">
 

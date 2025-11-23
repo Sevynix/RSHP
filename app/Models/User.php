@@ -72,4 +72,20 @@ class User extends Authenticatable
     {
         return $this->hasOne(Pemilik::class, 'iduser', 'iduser');
     }
+
+    /**
+     * Get the dokter record if this user is a doctor
+     */
+    public function dokter()
+    {
+        return $this->hasOne(Dokter::class, 'id_user', 'iduser');
+    }
+
+    /**
+     * Get the perawat record if this user is a nurse
+     */
+    public function perawat()
+    {
+        return $this->hasOne(Perawat::class, 'id_user', 'iduser');
+    }
 }

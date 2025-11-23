@@ -74,6 +74,20 @@
         </a>
     </li>
 
+    <li class="{{ request()->routeIs('admin.dokter.*') ? 'active' : '' }}">
+        <a href="{{ route('admin.dokter.index') }}">
+            <i class="fas fa-user-md"></i>
+            <span class="nav-text">Dokter</span>
+        </a>
+    </li>
+
+    <li class="{{ request()->routeIs('admin.perawat.*') ? 'active' : '' }}">
+        <a href="{{ route('admin.perawat.index') }}">
+            <i class="fas fa-user-nurse"></i>
+            <span class="nav-text">Perawat</span>
+        </a>
+    </li>
+
     <li class="{{ request()->routeIs('admin.pet.*') ? 'active' : '' }}">
         <a href="{{ route('admin.pet.index') }}">
             <i class="fas fa-cat"></i>

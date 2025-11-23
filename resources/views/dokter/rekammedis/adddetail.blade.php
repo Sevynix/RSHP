@@ -2,29 +2,29 @@
 
 @section('title', 'Tambah Detail Tindakan')
 @section('page-title', 'Tambah Detail Tindakan')
-@section('user-role', 'Perawat')
+@section('user-role', 'Dokter')
 
 @section('sidebar-menu')
-    <li class="{{ request()->routeIs('perawat.dashboard') ? 'active' : '' }}">
-        <a href="{{ route('perawat.dashboard') }}">
+    <li class="{{ request()->routeIs('dokter.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('dokter.dashboard') }}">
             <i class="fas fa-tachometer-alt"></i>
             <span class="nav-text">Dashboard</span>
         </a>
     </li>
-    <li class="{{ request()->routeIs('perawat.data-pasien') ? 'active' : '' }}">
-        <a href="{{ route('perawat.data-pasien') }}">
+    <li class="{{ request()->routeIs('dokter.data-pasien') ? 'active' : '' }}">
+        <a href="{{ route('dokter.data-pasien') }}">
             <i class="fas fa-paw"></i>
             <span class="nav-text">Data Pasien</span>
         </a>
     </li>
-    <li class="{{ request()->routeIs('perawat.rekammedis.*') ? 'active' : '' }}">
-        <a href="{{ route('perawat.rekammedis.index') }}">
+    <li class="{{ request()->routeIs('dokter.rekammedis.*') ? 'active' : '' }}">
+        <a href="{{ route('dokter.rekammedis.index') }}">
             <i class="fas fa-file-medical"></i>
             <span class="nav-text">Rekam Medis</span>
         </a>
     </li>
-    <li class="{{ request()->routeIs('perawat.profil*') ? 'active' : '' }}">
-        <a href="{{ route('perawat.profil') }}">
+    <li class="{{ request()->routeIs('dokter.profil*') ? 'active' : '' }}">
+        <a href="{{ route('dokter.profil') }}">
             <i class="fas fa-user-circle"></i>
             <span class="nav-text">Profil</span>
         </a>
@@ -78,7 +78,7 @@
                     </div>
 
                     <!-- Main Form -->
-                    <form action="{{ route('perawat.rekammedis.storedetail', $record->idrekam_medis) }}" method="POST">
+                    <form action="{{ route('dokter.rekammedis.storedetail', $record->idrekam_medis) }}" method="POST">
                         @csrf
 
                         <div class="row">
@@ -124,7 +124,7 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <a href="{{ route('perawat.rekammedis.show', $record->idrekam_medis) }}" class="btn btn-secondary">
+                            <a href="{{ route('dokter.rekammedis.index') }}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali
                             </a>
                             <button type="submit" class="btn btn-primary">

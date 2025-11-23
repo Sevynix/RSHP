@@ -338,4 +338,67 @@ class RekamMedisController extends Controller
                 ->withInput();
         }
     }
+
+    public function editDetail($id)
+    {
+        // Check authorization
+        if (session('user_role') != 2) {
+            return redirect()->route('login')->with('error', 'Unauthorized access');
+        }
+
+        $detail = DetailRekamMedis::findOrFail($id);
+        $categories = Kategori::all();
+        $treatmentCodes = KodeTindakanTerapi::with('kategori')->get();
+
+        return view('dokter.rekammedis.editdetail', compact('detail', 'categories', 'treatmentCodes'));
+    }
+
+    public function updateDetail(Request $request, $id)
+    {
+        // Check authorization
+        if (session('user_role') != 2) {
+            return redirect()->route('login')->with('error', 'Unauthorized access');
+        }
+
+        $detail = DetailRekamMedis::findOrFail($id);
+
+        $validated = $request->validate([
+            'idkode_tindakan_terapi' => 'required|exists:kode_tindakan_terapi,idkode_tindakan_terapi',
+            'detail' => 'nullable|string'
+        ]);
+
+        try {
+            $detail->update([
+                'idkode_tindakan_terapi' => $validated['idkode_tindakan_terapi'],
+                'detail' => $validated['detail'] ?? null
+            ]);
+
+            return redirect()->route('dokter.rekammedis.show', $detail->idrekam_medis)
+                ->with('success', 'Detail rekam medis berhasil diupdate');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Gagal mengupdate detail: ' . $e->getMessage())
+                ->withInput();
+        }
+    }
+
+    public function destroyDetail($id)
+    {
+        // Check authorization
+        if (session('user_role') != 2) {
+            return redirect()->route('login')->with('error', 'Unauthorized access');
+        }
+
+        try {
+            $detail = DetailRekamMedis::findOrFail($id);
+            $rekamMedisId = $detail->idrekam_medis;
+            $detail->delete();
+
+            return redirect()->route('dokter.rekammedis.show', $rekamMedisId)
+                ->with('success', 'Detail rekam medis berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Gagal menghapus detail: ' . $e->getMessage());
+        }
+    }
 }

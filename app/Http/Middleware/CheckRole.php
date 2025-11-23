@@ -19,7 +19,8 @@ class CheckRole
             'admin' => 1,
             'dokter' => 2,
             'perawat' => 3,
-            'resepsionis' => 4
+            'resepsionis' => 4,
+            'pemilik' => 5
         ];
 
         // Check if user role matches any of the allowed roles

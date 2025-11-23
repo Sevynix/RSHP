@@ -1,30 +1,30 @@
 @extends('layouts.main')
 
-@section('title', 'Tambah Detail Tindakan')
-@section('page-title', 'Tambah Detail Tindakan')
-@section('user-role', 'Perawat')
+@section('title', 'Edit Detail Tindakan')
+@section('page-title', 'Edit Detail Tindakan')
+@section('user-role', 'Dokter')
 
 @section('sidebar-menu')
-    <li class="{{ request()->routeIs('perawat.dashboard') ? 'active' : '' }}">
-        <a href="{{ route('perawat.dashboard') }}">
+    <li class="{{ request()->routeIs('dokter.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('dokter.dashboard') }}">
             <i class="fas fa-tachometer-alt"></i>
             <span class="nav-text">Dashboard</span>
         </a>
     </li>
-    <li class="{{ request()->routeIs('perawat.data-pasien') ? 'active' : '' }}">
-        <a href="{{ route('perawat.data-pasien') }}">
+    <li class="{{ request()->routeIs('dokter.data-pasien') ? 'active' : '' }}">
+        <a href="{{ route('dokter.data-pasien') }}">
             <i class="fas fa-paw"></i>
             <span class="nav-text">Data Pasien</span>
         </a>
     </li>
-    <li class="{{ request()->routeIs('perawat.rekammedis.*') ? 'active' : '' }}">
-        <a href="{{ route('perawat.rekammedis.index') }}">
+    <li class="{{ request()->routeIs('dokter.rekammedis.*') ? 'active' : '' }}">
+        <a href="{{ route('dokter.rekammedis.index') }}">
             <i class="fas fa-file-medical"></i>
             <span class="nav-text">Rekam Medis</span>
         </a>
     </li>
-    <li class="{{ request()->routeIs('perawat.profil*') ? 'active' : '' }}">
-        <a href="{{ route('perawat.profil') }}">
+    <li class="{{ request()->routeIs('dokter.profil*') ? 'active' : '' }}">
+        <a href="{{ route('dokter.profil') }}">
             <i class="fas fa-user-circle"></i>
             <span class="nav-text">Profil</span>
         </a>
@@ -38,7 +38,7 @@
             <div class="card shadow">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
-                        <i class="fas fa-plus-circle me-2"></i>Tambah Detail Tindakan
+                        <i class="fas fa-edit me-2"></i>Edit Detail Tindakan
                     </h5>
                 </div>
                 <div class="card-body">
@@ -53,14 +53,6 @@
                         </div>
                     @endif
 
-                    <!-- Informasi Rekam Medis -->
-                    <div class="alert alert-info mb-3">
-                        <h6><i class="fas fa-file-medical me-2"></i>Informasi Rekam Medis</h6>
-                        <p class="mb-1"><strong>ID:</strong> {{ $record->idrekam_medis }}</p>
-                        <p class="mb-1"><strong>Diagnosa:</strong> {{ $record->diagnosa }}</p>
-                        <p class="mb-0"><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($record->created_at)->format('d/m/Y H:i') }}</p>
-                    </div>
-
                     <!-- Filter Kategori -->
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -68,7 +60,8 @@
                             <select class="form-select" id="kategori_filter">
                                 <option value="">Semua Kategori</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->idkategori }}">
+                                    <option value="{{ $category->idkategori }}"
+                                            {{ $detail->idkategori == $category->idkategori ? 'selected' : '' }}>
                                         {{ $category->nama_kategori }}
                                     </option>
                                 @endforeach
@@ -78,8 +71,9 @@
                     </div>
 
                     <!-- Main Form -->
-                    <form action="{{ route('perawat.rekammedis.storedetail', $record->idrekam_medis) }}" method="POST">
+                    <form action="{{ route('dokter.detailrekammedis.update', $detail->iddetail_rekam_medis) }}" method="POST">
                         @csrf
+                        @method('PUT')
 
                         <div class="row">
                             <div class="col-md-12 mb-3">
@@ -91,7 +85,7 @@
                                     @foreach($treatmentCodes as $code)
                                         <option value="{{ $code->idkode_tindakan_terapi }}"
                                                 data-kategori="{{ $code->idkategori }}"
-                                                {{ old('idkode_tindakan_terapi') == $code->idkode_tindakan_terapi ? 'selected' : '' }}>
+                                                {{ old('idkode_tindakan_terapi', $detail->idkode_tindakan_terapi) == $code->idkode_tindakan_terapi ? 'selected' : '' }}>
                                             {{ $code->kode }} - {{ $code->deskripsi_tindakan_terapi }}
                                             @if($code->kategori)
                                                 ({{ $code->kategori->nama_kategori }})
@@ -115,7 +109,7 @@
                                           id="detail" 
                                           name="detail" 
                                           rows="3"
-                                          placeholder="Tambahkan detail atau catatan khusus untuk tindakan ini (opsional)...">{{ old('detail') }}</textarea>
+                                          placeholder="Tambahkan detail atau catatan khusus untuk tindakan ini (opsional)...">{{ old('detail', $detail->detail) }}</textarea>
                                 <small class="text-muted">Opsional: Berisi catatan tambahan atau detail khusus untuk tindakan ini</small>
                                 @error('detail')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -124,11 +118,11 @@
                         </div>
 
                         <div class="d-flex justify-content-between">
-                            <a href="{{ route('perawat.rekammedis.show', $record->idrekam_medis) }}" class="btn btn-secondary">
+                            <a href="{{ route('dokter.rekammedis.index') }}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left me-2"></i>Kembali
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i>Simpan Detail
+                                <i class="fas fa-save me-2"></i>Update Detail
                             </button>
                         </div>
                     </form>
@@ -152,6 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
     kategoriFilter.addEventListener('change', function() {
         const selectedKategori = this.value;
         
+        // Simpan nilai yang dipilih saat ini
+        const currentValue = kodeTindakanSelect.value;
+        
         // Reset select
         kodeTindakanSelect.innerHTML = '<option value="">Pilih Kode Tindakan</option>';
         
@@ -169,6 +166,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 count++;
             }
         });
+        
+        // Restore nilai yang dipilih jika masih ada di daftar
+        if (currentValue) {
+            const optionExists = Array.from(kodeTindakanSelect.options).some(opt => opt.value === currentValue);
+            if (optionExists) {
+                kodeTindakanSelect.value = currentValue;
+            }
+        }
         
         // Update info
         if (selectedKategori) {
