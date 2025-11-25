@@ -16,6 +16,9 @@ class DetailRekamMedis extends Model
     protected $fillable = [
         'idrekam_medis',
         'idkode_tindakan_terapi',
+        'idkategori',
+        'catatan',
+        'biaya',
         'detail'
     ];
 
@@ -28,5 +31,10 @@ class DetailRekamMedis extends Model
     public function kodeTindakanTerapi()
     {
         return $this->belongsTo(KodeTindakanTerapi::class, 'idkode_tindakan_terapi', 'idkode_tindakan_terapi');
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'idkategori', 'idkategori');
     }
 }

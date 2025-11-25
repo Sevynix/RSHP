@@ -215,25 +215,4 @@
         </div>
     </div>
 </div>
-
-<style>
-.table th {
-    border-top: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.badge.fs-6 {
-    font-size: 1rem !important;
-    padding: 0.5em 0.75em;
-}
-
-.alert ul {
-    padding-left: 1.5rem;
-}
-
-.alert li {
-    margin-bottom: 0.5rem;
-}
-</style>
 @endsection

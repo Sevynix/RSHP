@@ -225,36 +225,4 @@
         </div>
     @endif
 </div>
-
-<style>
-.pet-card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.pet-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
-}
-
-.pet-avatar {
-    padding: 1rem;
-}
-
-.pet-info {
-    font-size: 0.9rem;
-}
-
-.table-borderless td {
-    border: none;
-    padding: 0.25rem 0;
-}
-
-.card-header {
-    border-bottom: 2px solid rgba(255,255,255,0.2);
-}
-
-.card-footer {
-    border-top: 1px solid #dee2e6;
-}
-</style>
 @endsection

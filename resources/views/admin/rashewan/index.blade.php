@@ -3,22 +3,7 @@
 @section('title', 'Manajemen Ras Hewan')
 @section('page-title', 'Manajemen Ras Hewan')
 
-@push('styles')
-<style>
-.jenis-group-header {
-    background-color: #f8f9fa !important;
-    border-left: 4px solid #0d6efd;
-    font-weight: bold;
-    vertical-align: middle;
-}
-.add-ras-row {
-    background-color: #f1f3f4 !important;
-}
-.add-ras-row td {
-    border-top: 2px solid #dee2e6 !important;
-}
-</style>
-@endpush
+
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">

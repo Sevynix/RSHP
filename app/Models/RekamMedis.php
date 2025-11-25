@@ -11,16 +11,14 @@ class RekamMedis extends Model
 
     protected $table = 'rekam_medis';
     protected $primaryKey = 'idrekam_medis';
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
-        'idreservasi_dokter',
         'anamnesa',
         'temuan_klinis',
         'diagnosa',
         'dokter_pemeriksa',
-        'created_at',
-        'updated_at'
+        'idreservasi_dokter'
     ];
 
     // Relationships
@@ -29,21 +27,9 @@ class RekamMedis extends Model
         return $this->belongsTo(TemuDokter::class, 'idreservasi_dokter', 'idreservasi_dokter');
     }
 
-    public function pet()
-    {
-        return $this->hasOneThrough(
-            Pet::class,
-            TemuDokter::class,
-            'idreservasi_dokter', // Foreign key on temu_dokter table
-            'idpet', // Foreign key on pet table
-            'idreservasi_dokter', // Local key on rekam_medis table
-            'idpet' // Local key on temu_dokter table
-        );
-    }
-
     public function dokterPemeriksa()
     {
-        return $this->belongsTo(User::class, 'dokter_pemeriksa', 'iduser');
+        return $this->belongsTo(RoleUser::class, 'dokter_pemeriksa', 'idrole_user');
     }
 
     // Alias for dokterPemeriksa for consistency

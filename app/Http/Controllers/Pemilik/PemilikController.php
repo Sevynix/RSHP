@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Hash;
 
 class PemilikController extends Controller
 {
-    /**
-     * Display dashboard for pemilik
-     */
     public function dashboard()
     {
         if (session('user_role') != 5) {
@@ -155,20 +152,12 @@ class PemilikController extends Controller
         }
 
         $pets = Pet::with([
-                'rekamMedis.detailRekamMedis.kodeTindakanTerapi', 
-                'rekamMedis.detailRekamMedis.kategori', 
-                'rekamMedis.dokterPemeriksa',
-                'rekamMedis.temuDokter',
+                'rekamMedis.dokterPemeriksa.user',
                 'jenisHewan', 
                 'rasHewan'
             ])
             ->where('idpemilik', $pemilik->idpemilik)
             ->get();
-
-        // Debug: Check if rekamMedis are being loaded
-        foreach($pets as $pet) {
-            \Log::info("Pet: {$pet->nama} - Rekam Medis Count: " . $pet->rekamMedis->count());
-        }
 
         return view('pemilik.rekam_medis', compact('pets', 'pemilik'));
     }

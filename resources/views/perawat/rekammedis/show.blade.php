@@ -193,19 +193,4 @@
         </div>
     </div>
 </div>
-
-<style>
-@media print {
-    .btn, .card-header .btn, nav, .sidebar, #sidebar-wrapper {
-        display: none !important;
-    }
-    .card {
-        border: none !important;
-        box-shadow: none !important;
-    }
-    .card-body {
-        padding: 0 !important;
-    }
-}
-</style>
 @endsection

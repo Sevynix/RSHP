@@ -8,4 +8,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <!-- RSHP Custom CSS -->
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+<!-- Dashboard CSS for All Roles -->
+@if(request()->is('admin/*') || request()->is('dokter/*') || request()->is('perawat/*') || request()->is('resepsionis/*') || request()->is('pemilik/*'))
+<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+@endif
+
 @stack('styles')

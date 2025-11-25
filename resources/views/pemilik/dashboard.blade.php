@@ -257,34 +257,5 @@
             </div>
         </div>
     </div>
-
-    <style>
-    .border-left-primary {
-        border-left: 0.25rem solid #4e73df !important;
-    }
-    .border-left-success {
-        border-left: 0.25rem solid #1cc88a !important;
-    }
-    .border-left-info {
-        border-left: 0.25rem solid #36b9cc !important;
-    }
-    .border-left-warning {
-        border-left: 0.25rem solid #f6c23e !important;
-    }
-    .timeline-item {
-        position: relative;
-    }
-    .timeline-icon {
-        width: 30px;
-        text-align: center;
-    }
-    .pet-icon {
-        min-width: 50px;
-    }
-    .card:hover {
-        transform: translateY(-2px);
-        transition: all 0.2s ease;
-    }
-    </style>
 </div>
 @endsection

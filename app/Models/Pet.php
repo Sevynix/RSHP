@@ -52,6 +52,7 @@ class Pet extends Model
 
     public function rekamMedis()
     {
+        // Since rekam_medis.idreservasi_dokter can be NULL, we use a custom query
         return $this->hasManyThrough(
             RekamMedis::class,
             TemuDokter::class,
@@ -59,7 +60,7 @@ class Pet extends Model
             'idreservasi_dokter', // Foreign key on rekam_medis table
             'idpet', // Local key on pet table
             'idreservasi_dokter' // Local key on temu_dokter table
-        );
+        )->whereNotNull('rekam_medis.idreservasi_dokter');
     }
 
     public function scopeWithRelations($query)
