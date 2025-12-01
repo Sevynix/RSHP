@@ -49,60 +49,60 @@
     <!-- Statistics -->
     <div class="row mb-4">
         <div class="col-md-3">
-            <div class="card bg-primary text-white">
+            <div class="card stat-card shadow-sm">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="card-title mb-0">{{ $totalKunjungan }}</h4>
-                            <p class="card-text">Total Kunjungan</p>
+                            <h4 class="fw-bold text-dark mb-1">{{ $totalKunjungan }}</h4>
+                            <p class="text-secondary mb-0">Total Kunjungan</p>
                         </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-calendar-check fa-2x"></i>
+                        <div class="stat-icon bg-primary">
+                            <i class="fas fa-calendar-check"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-warning text-white">
+            <div class="card stat-card shadow-sm">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="card-title mb-0">{{ $menunggu }}</h4>
-                            <p class="card-text">Menunggu</p>
+                            <h4 class="fw-bold text-dark mb-1">{{ $menunggu }}</h4>
+                            <p class="text-secondary mb-0">Menunggu</p>
                         </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-clock fa-2x"></i>
+                        <div class="stat-icon bg-warning">
+                            <i class="fas fa-clock"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-success text-white">
+            <div class="card stat-card shadow-sm">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="card-title mb-0">{{ $selesai }}</h4>
-                            <p class="card-text">Selesai</p>
+                            <h4 class="fw-bold text-dark mb-1">{{ $selesai }}</h4>
+                            <p class="text-secondary mb-0">Selesai</p>
                         </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-check-circle fa-2x"></i>
+                        <div class="stat-icon bg-success">
+                            <i class="fas fa-check-circle"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-info text-white">
+            <div class="card stat-card shadow-sm">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h4 class="card-title mb-0">{{ $hewanBerbeda }}</h4>
-                            <p class="card-text">Hewan Berbeda</p>
+                            <h4 class="fw-bold text-dark mb-1">{{ $hewanBerbeda }}</h4>
+                            <p class="text-secondary mb-0">Hewan Berbeda</p>
                         </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-paw fa-2x"></i>
+                        <div class="stat-icon bg-info">
+                            <i class="fas fa-paw"></i>
                         </div>
                     </div>
                 </div>
@@ -187,10 +187,10 @@
                 </div>
             @else
                 <div class="text-center py-5">
-                    <i class="fas fa-calendar-times fa-4x text-muted mb-4"></i>
-                    <h4 class="text-muted">Belum Ada Kunjungan</h4>
-                    <p class="text-muted">Anda belum memiliki riwayat kunjungan ke klinik.</p>
-                    <p class="text-muted small">
+                    <i class="fas fa-calendar-times fa-4x text-secondary mb-4"></i>
+                    <h4 class="text-dark">Belum Ada Kunjungan</h4>
+                    <p class="text-dark">Anda belum memiliki riwayat kunjungan ke klinik.</p>
+                    <p class="text-secondary small">
                         Untuk membuat reservasi baru, silakan hubungi resepsionis di klinik.
                     </p>
                 </div>
@@ -201,16 +201,21 @@
     <!-- Information -->
     <div class="row mt-4">
         <div class="col-12">
-            <div class="alert alert-info">
-                <h6 class="alert-heading">
-                    <i class="fas fa-info-circle me-2"></i>Informasi Kunjungan
-                </h6>
-                <p class="mb-2">Status kunjungan dijelaskan sebagai berikut:</p>
-                <ul class="mb-0">
-                    <li><span class="badge bg-warning text-dark me-1">Menunggu</span> - Kunjungan yang telah dijadwalkan dan sedang menunggu giliran</li>
-                    <li><span class="badge bg-success me-1">Selesai</span> - Kunjungan yang sudah selesai dilakukan</li>
-                    <li><span class="badge bg-secondary me-1">Dibatalkan</span> - Kunjungan yang dibatalkan</li>
-                </ul>
+            <div class="card border-primary shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-start">
+                        <i class="fas fa-info-circle text-primary fs-4 me-3"></i>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-2">Informasi Kunjungan</h6>
+                            <p class="text-dark mb-2">Status kunjungan dijelaskan sebagai berikut:</p>
+                            <ul class="mb-0">
+                                <li><span class="badge bg-warning text-white me-1">MENUNGGU</span> - Kunjungan yang telah dijadwalkan dan sedang menunggu giliran</li>
+                                <li><span class="badge bg-success text-white me-1">SELESAI</span> - Kunjungan yang sudah selesai dilakukan</li>
+                                <li><span class="badge bg-secondary text-white me-1">DIBATALKAN</span> - Kunjungan yang dibatalkan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

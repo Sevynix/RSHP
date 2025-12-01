@@ -135,16 +135,16 @@
                                         <div class="card-body p-3">
                                             <div class="d-flex align-items-center">
                                                 <div class="pet-icon me-3">
-                                                    <i class="fas fa-dog fa-2x text-primary"></i>
+                                                    <i class="fas fa-dog"></i>
                                                 </div>
                                                 <div>
-                                                    <h6 class="mb-1 fw-bold">{{ is_array($pet) ? $pet['nama'] : $pet->nama }}</h6>
-                                                    <small class="text-muted">
-                                                        {{ is_array($pet) ? ($pet['nama_ras'] ?? 'Tidak diketahui') : ($pet->nama_ras ?? 'Tidak diketahui') }}
-                                                    </small><br>
-                                                    <small class="text-info">
+                                                    <h6 class="mb-1 fw-bold text-dark">{{ is_array($pet) ? $pet['nama'] : $pet->nama }}</h6>
+                                                    <div class="text-dark mb-1">
+                                                        <small><strong>{{ is_array($pet) ? ($pet['nama_ras'] ?? 'Tidak diketahui') : ($pet->nama_ras ?? 'Tidak diketahui') }}</strong></small>
+                                                    </div>
+                                                    <span class="badge bg-info text-white">
                                                         {{ is_array($pet) ? ($pet['nama_jenis_hewan'] ?? 'Hewan') : ($pet->nama_jenis_hewan ?? 'Hewan') }}
-                                                    </small>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -154,8 +154,8 @@
                         </div>
                     @else
                         <div class="text-center py-4">
-                            <i class="fas fa-paw fa-3x text-muted mb-3"></i>
-                            <p class="text-muted">Anda belum memiliki hewan peliharaan terdaftar</p>
+                            <i class="fas fa-paw fa-3x text-secondary mb-3"></i>
+                            <p class="text-dark">Anda belum memiliki hewan peliharaan terdaftar</p>
                         </div>
                     @endif
                 </div>
@@ -219,8 +219,8 @@
                         </div>
                     @else
                         <div class="text-center py-4">
-                            <i class="fas fa-history fa-3x text-muted mb-3"></i>
-                            <p class="text-muted">Belum ada aktivitas</p>
+                            <i class="fas fa-history fa-3x text-secondary mb-3"></i>
+                            <p class="text-dark">Belum ada aktivitas</p>
                         </div>
                     @endif
                 </div>
@@ -231,23 +231,19 @@
     <!-- Information Alert -->
     <div class="row">
         <div class="col-12">
-            <div class="alert alert-info shadow" role="alert">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-info-circle fa-2x me-3"></i>
-                    <div>
-                        <h5 class="alert-heading mb-2">
-                            <i class="fas fa-hospital me-2"></i>Selamat Datang di RSHP (Rumah Sakit Hewan Peliharaan)
-                        </h5>
-                        <p class="mb-2">
-                            <strong>Untuk membuat jadwal konsultasi atau pemeriksaan hewan peliharaan Anda:</strong>
-                        </p>
-                        <ul class="mb-2">
-                            <li><i class="fas fa-phone me-2 text-primary"></i>Hubungi resepsionis kami di <strong>telepon</strong></li>
-                            <li><i class="fas fa-map-marker-alt me-2 text-primary"></i>Kunjungi langsung <strong>RSHP</strong> untuk konsultasi</li>
-                            <li><i class="fas fa-clock me-2 text-primary"></i>Jam operasional: <strong>Senin-Minggu, 08:00-20:00 WIB</strong></li>
-                        </ul>
-                        <div class="mt-3">
-                            <small class="text-muted">
+            <div class="card border-primary shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-start">
+                        <i class="fas fa-info-circle text-primary fs-4 me-3"></i>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-2">Selamat Datang di RSHP (Rumah Sakit Hewan Peliharaan)</h5>
+                            <p class="text-dark mb-2">Untuk membuat jadwal konsultasi atau pemeriksaan hewan peliharaan Anda:</p>
+                            <ul class="mb-2">
+                                <li><i class="fas fa-phone me-2 text-primary"></i>Hubungi resepsionis kami di telepon</li>
+                                <li><i class="fas fa-map-marker-alt me-2 text-primary"></i>Kunjungi langsung RSHP untuk konsultasi</li>
+                                <li><i class="fas fa-clock me-2 text-primary"></i>Jam operasional: Senin-Minggu, 08:00-20:00 WIB</li>
+                            </ul>
+                            <small class="text-secondary">
                                 <i class="fas fa-shield-alt me-1"></i>
                                 Gunakan menu navigasi di sidebar untuk melihat informasi hewan peliharaan, jadwal kunjungan, dan rekam medis Anda.
                             </small>

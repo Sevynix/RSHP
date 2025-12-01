@@ -1,27 +1,69 @@
 :root {
-    --sidebar-bg: #1e1e1e;
-    --sidebar-bg-darker: #1a1a1a;
+    /* Primary Theme Colors */
+    --primary-color: #1e40af;
+    --primary-light: #3b82f6;
+    --primary-dark: #1e3a8a;
+    
+    /* Sidebar Colors */
+    --sidebar-bg: #1e293b;
+    --sidebar-bg-darker: #0f172a;
+    --sidebar-border: rgba(71, 85, 105, 0.3);
+    
+    /* Text Colors */
     --primary-text: #ffffff;
     --secondary-text: rgba(255, 255, 255, 0.7);
-    --active-bg: #0073e6;
-    --active-hover: #0056b3;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    
+    /* Active/Hover States */
+    --active-bg: #3b82f6;
+    --active-hover: #2563eb;
     --active-text: #ffffff;
     --hover-text: #ffffff;
-    --page-bg: #0A1A3C;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --hover-bg: rgba(255, 255, 255, 0.1);
-    --input-bg: rgba(255, 255, 255, 0.1);
+    --hover-bg: rgba(59, 130, 246, 0.1);
     
-    --table-header-bg: #005bb5;
-    --table-even-row: #e6f2ff;
+    /* Page Background */
+    --page-bg: #f1f5f9;
+    --page-bg-dark: #e2e8f0;
+    
+    /* Card/Component Backgrounds */
+    --card-bg: #ffffff;
+    --card-bg-secondary: #f8fafc;
+    
+    /* Table Colors */
+    --table-header-bg: #1e293b;
+    --table-even-row: #f8fafc;
     --table-odd-row: #ffffff;
-    --table-hover: #cce0ff;
+    --table-hover: #e0f2fe;
+    --table-border: #e2e8f0;
     
-    --status-active: #198754;
-    --status-inactive: #dc3545;
+    /* Status Colors */
+    --status-success: #10b981;
+    --status-warning: #f59e0b;
+    --status-danger: #ef4444;
+    --status-info: #3b82f6;
+    --status-active: #10b981;
+    --status-inactive: #ef4444;
     
-    --sidebar-width-collapsed: 88px;
-    --sidebar-width-expanded: 300px;
+    /* Border Colors */
+    --border-color: #e2e8f0;
+    --border-light: #f1f5f9;
+    --border-dark: #cbd5e1;
+    
+    /* Shadow Colors */
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    
+    /* Input Colors */
+    --input-bg: #ffffff;
+    --input-border: #d1d5db;
+    --input-focus: #3b82f6;
+    
+    /* Sidebar Dimensions */
+    --sidebar-width-collapsed: 70px;
+    --sidebar-width-expanded: 260px;
 }
 
 html {
@@ -30,13 +72,13 @@ html {
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #0d1b2a 100%);
-    background-attachment: fixed;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--page-bg);
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    color: #c7d0e0;
+    color: var(--text-dark);
+    line-height: 1.6;
 }
 
 /* Main Layout Structure */

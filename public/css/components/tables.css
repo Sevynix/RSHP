@@ -23,11 +23,8 @@
 
 /* Table Header */
 .table-custom-header thead th {
-    background-color: #005bb5;
+    background: var(--table-header-bg);
     color: #ffffff !important;
-    border-bottom-width: 0;
-    background: var(--active-bg);
-    color: white;
     font-weight: 500;
     padding: 1rem;
     text-align: left;

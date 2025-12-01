@@ -14,63 +14,55 @@
     </div>
     
     <!-- Statistics Cards -->
-    <div class="row mb-4">
-        <div class="col-md-3 mb-3">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title mb-0">{{ $todayQueue ?? 0 }}</h5>
-                            <p class="card-text">Antrian Aktif Hari Ini</p>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-clock fa-2x"></i>
-                        </div>
+    <div class="row mb-4 g-3">
+        <div class="col-md-3">
+            <div class="stat-card card-primary">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-2">Antrian Aktif Hari Ini</p>
+                        <h3 class="mb-0">{{ $todayQueue ?? 0 }}</h3>
+                    </div>
+                    <div>
+                        <i class="fas fa-clock stat-icon"></i>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title mb-0">{{ $completedToday ?? 0 }}</h5>
-                            <p class="card-text">Selesai Hari Ini</p>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-check-circle fa-2x"></i>
-                        </div>
+        <div class="col-md-3">
+            <div class="stat-card card-success">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-2">Selesai Hari Ini</p>
+                        <h3 class="mb-0">{{ $completedToday ?? 0 }}</h3>
+                    </div>
+                    <div>
+                        <i class="fas fa-check-circle stat-icon"></i>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 mb-3">
-            <div class="card bg-info text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title mb-0">{{ $totalPets ?? 0 }}</h5>
-                            <p class="card-text">Total Pet</p>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-paw fa-2x"></i>
-                        </div>
+        <div class="col-md-3">
+            <div class="stat-card card-info">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-2">Total Pet</p>
+                        <h3 class="mb-0">{{ $totalPets ?? 0 }}</h3>
+                    </div>
+                    <div>
+                        <i class="fas fa-paw stat-icon"></i>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 mb-3">
-            <div class="card bg-warning text-dark">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title mb-0">{{ $totalOwners ?? 0 }}</h5>
-                            <p class="card-text">Total Pemilik</p>
-                        </div>
-                        <div class="align-self-center">
-                            <i class="fas fa-users fa-2x"></i>
-                        </div>
+        <div class="col-md-3">
+            <div class="stat-card card-warning">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted mb-2">Total Pemilik</p>
+                        <h3 class="mb-0">{{ $totalOwners ?? 0 }}</h3>
+                    </div>
+                    <div>
+                        <i class="fas fa-users stat-icon"></i>
                     </div>
                 </div>
             </div>
@@ -178,9 +170,16 @@
     
     <div class="row mt-4">
         <div class="col-12">
-            <div class="alert alert-info">
-                <h6 class="alert-heading">Informasi:</h6>
-                <p class="mb-0">Sebagai resepsionis, Anda dapat mengelola temu dokter, melihat data pemilik dan pet.</p>
+            <div class="card border-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-start">
+                        <i class="fas fa-info-circle text-primary fs-4 me-3"></i>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-2">Informasi:</h6>
+                            <p class="text-muted mb-0">Sebagai resepsionis, Anda dapat mengelola temu dokter, melihat data pemilik dan pet.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

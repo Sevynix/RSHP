@@ -61,11 +61,11 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">&nbsp;</label>
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-outline-primary flex-fill">
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-outline-primary" style="min-width: 90px;">
                             <i class="fas fa-search me-1"></i>Cari
                         </button>
-                        <a href="{{ route('dokter.rekammedis.index') }}" class="btn btn-outline-secondary flex-fill" title="Reset Filter">
+                        <a href="{{ route('dokter.rekammedis.index') }}" class="btn btn-outline-secondary" title="Reset Filter" style="min-width: 90px;">
                             <i class="fas fa-undo me-1"></i>Reset
                         </a>
                     </div>

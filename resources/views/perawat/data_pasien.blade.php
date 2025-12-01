@@ -67,9 +67,7 @@
                                     </td>
                                     <td>
                                         @if($pet->no_wa)
-                                            <a href="https://wa.me/{{ $pet->no_wa }}" target="_blank" class="btn btn-sm btn-success">
-                                                <i class="bi bi-whatsapp"></i> {{ $pet->no_wa }}
-                                            </a>
+                                            <span class="text-dark">{{ $pet->no_wa }}</span>
                                         @else
                                             <span class="text-muted">-</span>
                                         @endif

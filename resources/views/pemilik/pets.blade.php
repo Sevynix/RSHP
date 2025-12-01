@@ -50,45 +50,45 @@
         <!-- Pet Statistics -->
         <div class="row mb-4">
             <div class="col-md-4">
-                <div class="card bg-primary text-white">
+                <div class="card stat-card shadow-sm">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h4 class="card-title mb-0">{{ $pets->total() }}</h4>
-                                <p class="card-text">Total Hewan Peliharaan</p>
+                                <h4 class="fw-bold text-dark mb-1">{{ $pets->total() }}</h4>
+                                <p class="text-secondary mb-0">Total Hewan Peliharaan</p>
                             </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-paw fa-2x"></i>
+                            <div class="stat-icon bg-primary">
+                                <i class="fas fa-paw"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card bg-info text-white">
+                <div class="card stat-card shadow-sm">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h4 class="card-title mb-0">{{ $totalJenisHewan }}</h4>
-                                <p class="card-text">Jenis Hewan</p>
+                                <h4 class="fw-bold text-dark mb-1">{{ $totalJenisHewan }}</h4>
+                                <p class="text-secondary mb-0">Jenis Hewan</p>
                             </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-tags fa-2x"></i>
+                            <div class="stat-icon bg-info">
+                                <i class="fas fa-tags"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card bg-success text-white">
+                <div class="card stat-card shadow-sm">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h4 class="card-title mb-0">{{ $totalRas }}</h4>
-                                <p class="card-text">Ras Berbeda</p>
+                                <h4 class="fw-bold text-dark mb-1">{{ $totalRas }}</h4>
+                                <p class="text-secondary mb-0">Ras Berbeda</p>
                             </div>
-                            <div class="align-self-center">
-                                <i class="fas fa-dna fa-2x"></i>
+                            <div class="stat-icon bg-success">
+                                <i class="fas fa-dna"></i>
                             </div>
                         </div>
                     </div>

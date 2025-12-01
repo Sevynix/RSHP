@@ -30,8 +30,8 @@
                             <td>{{ $pet->idpet }}</td>
                             <td>{{ $pet->nama }}</td>
                             <td>
-                                <span class="badge bg-{{ $pet->jenis_kelamin == 'J' ? 'primary' : 'info' }}">
-                                    {{ $pet->jenis_kelamin == 'J' ? 'Jantan' : 'Betina' }}
+                                <span class="badge bg-{{ $pet->jenis_kelamin == 'J' ? 'secondary' : 'info' }}">
+                                    {{ $pet->jenis_kelamin == 'J' ? 'JANTAN' : 'BETINA' }}
                                 </span>
                             </td>
                             <td>{{ $pet->nama_pemilik }}</td>

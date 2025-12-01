@@ -99,14 +99,27 @@
     <!-- Informasi -->
     <div class="row mt-4">
         <div class="col-12">
-            <div class="alert alert-info">
-                <h6 class="alert-heading">Informasi:</h6>
-                <p class="mb-2">Sistem antrian temu dokter menampilkan daftar antrian untuk hari ini. Nomor urut akan otomatis bertambah setiap ada pendaftaran baru.</p>
-                <p class="mb-0"><strong>Status:</strong></p>
-                <ul class="mb-0 mt-1">
-                    <li><span class="badge bg-warning text-dark"><i class="fas fa-clock"></i> Menunggu</span> - Antrian aktif, dapat diklik "Selesai"</li>
-                    <li><span class="badge bg-success"><i class="fas fa-check"></i> Selesai</span> - Antrian sudah diselesaikan (data tersimpan untuk rekam historis)</li>
-                </ul>
+            <div class="card border-primary">
+                <div class="card-body">
+                    <div class="d-flex align-items-start mb-3">
+                        <i class="fas fa-info-circle text-primary fs-4 me-3 mt-1"></i>
+                        <div class="flex-grow-1">
+                            <h6 class="fw-bold text-dark mb-2">Informasi:</h6>
+                            <p class="text-muted mb-3">Sistem antrian temu dokter menampilkan daftar antrian untuk hari ini. Nomor urut akan otomatis bertambah setiap ada pendaftaran baru.</p>
+                            <p class="fw-bold text-dark mb-2">Status:</p>
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2">
+                                    <span class="badge bg-warning"><i class="fas fa-clock me-1"></i>MENUNGGU</span>
+                                    <span class="text-muted ms-2">- Antrian aktif, dapat diklik "Selesai"</span>
+                                </li>
+                                <li>
+                                    <span class="badge bg-success"><i class="fas fa-check me-1"></i>SELESAI</span>
+                                    <span class="text-muted ms-2">- Antrian sudah diselesaikan (data tersimpan untuk rekam historis)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

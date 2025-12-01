@@ -12,64 +12,56 @@
 
 <div class="row g-3 mb-4">
     <div class="col-md-3 col-sm-6">
-        <div class="card bg-primary text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="text-white-50">Total Users</h6>
-                        <h2 class="mb-0">{{ $totalUsers }}</h2>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-users fa-2x opacity-50"></i>
-                    </div>
+        <div class="stat-card card-primary">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-2">Total Users</p>
+                    <h3 class="mb-0">{{ $totalUsers }}</h3>
+                </div>
+                <div>
+                    <i class="fas fa-users stat-icon"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-md-3 col-sm-6">
-        <div class="card bg-success text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="text-white-50">Total Pets</h6>
-                        <h2 class="mb-0">{{ $totalPets }}</h2>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-paw fa-2x opacity-50"></i>
-                    </div>
+        <div class="stat-card card-success">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-2">Total Pets</p>
+                    <h3 class="mb-0">{{ $totalPets }}</h3>
+                </div>
+                <div>
+                    <i class="fas fa-paw stat-icon"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-md-3 col-sm-6">
-        <div class="card bg-info text-white">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="text-white-50">Today's Appointments</h6>
-                        <h2 class="mb-0">{{ $todayAppointments }}</h2>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-calendar-check fa-2x opacity-50"></i>
-                    </div>
+        <div class="stat-card card-info">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-2">Today's Appointments</p>
+                    <h3 class="mb-0">{{ $todayAppointments }}</h3>
+                </div>
+                <div>
+                    <i class="fas fa-calendar-check stat-icon"></i>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="col-md-3 col-sm-6">
-        <div class="card bg-warning text-dark">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h6 class="text-muted">Total Pemilik</h6>
-                        <h2 class="mb-0">{{ $totalPemilik }}</h2>
-                    </div>
-                    <div class="align-self-center">
-                        <i class="fas fa-user-tie fa-2x opacity-50"></i>
-                    </div>
+        <div class="stat-card card-warning">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-muted mb-2">Total Pemilik</p>
+                    <h3 class="mb-0">{{ $totalPemilik }}</h3>
+                </div>
+                <div>
+                    <i class="fas fa-user-tie stat-icon"></i>
                 </div>
             </div>
         </div>
@@ -79,7 +71,7 @@
 <div class="row mb-4">
     <div class="col-12">
         <div class="card">
-            <div class="card-header bg-success text-white">
+            <div class="card-header" style="background: #1e40af; color: white; border-bottom: 1px solid rgba(30, 64, 175, 0.2);">
                 <h5 class="card-title mb-0">Master Data Sistem</h5>
             </div>
             <div class="card-body">
