@@ -135,7 +135,7 @@
                             @foreach($jadwalList as $reservation)
                                 <tr>
                                     <td>
-                                        <span class="badge bg-info">
+                                        <span class="badge bg-info text-white">
                                             #{{ $reservation->idreservasi_dokter }}
                                         </span>
                                     </td>
@@ -153,7 +153,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="badge bg-primary fs-6">
+                                        <span class="badge bg-dark text-white fs-5 px-3 py-2">
                                             {{ $reservation->no_urut }}
                                         </span>
                                     </td>

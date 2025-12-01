@@ -135,7 +135,19 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>Jenis Kelamin:</strong></td>
-                                                <td>{{ $pet->jenis_kelamin ?? 'Tidak diketahui' }}</td>
+                                                <td>
+                                                    @if(isset($pet->jenis_kelamin))
+                                                        @if(strtoupper($pet->jenis_kelamin) === 'J' || strtoupper($pet->jenis_kelamin) === 'JANTAN')
+                                                            <span class="badge bg-info text-white">JANTAN</span>
+                                                        @elseif(strtoupper($pet->jenis_kelamin) === 'B' || strtoupper($pet->jenis_kelamin) === 'BETINA')
+                                                            <span class="badge bg-warning text-white">BETINA</span>
+                                                        @else
+                                                            <span class="badge bg-secondary text-white">{{ strtoupper($pet->jenis_kelamin) }}</span>
+                                                        @endif
+                                                    @else
+                                                        <span class="text-muted">Tidak diketahui</span>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>
