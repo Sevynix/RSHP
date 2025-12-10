@@ -3,13 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class Pet extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'pet';
     protected $primaryKey = 'idpet';
     public $timestamps = false;
+    
+    const DELETED_AT = 'deleted_at';
 
     protected $fillable = [
         'nama',
@@ -17,7 +22,8 @@ class Pet extends Model
         'jenis_kelamin',
         'warna_tanda',
         'idpemilik',
-        'idras_hewan'
+        'idras_hewan',
+        'deleted_by',
     ];
 
     public function pemilik()

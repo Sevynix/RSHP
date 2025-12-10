@@ -4,21 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RekamMedis extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'rekam_medis';
     protected $primaryKey = 'idrekam_medis';
     public $timestamps = false;
+    
+    const DELETED_AT = 'deleted_at';
 
     protected $fillable = [
         'anamnesa',
         'temuan_klinis',
         'diagnosa',
         'dokter_pemeriksa',
-        'idreservasi_dokter'
+        'idreservasi_dokter',
+        'deleted_by',
     ];
 
     // Relationships

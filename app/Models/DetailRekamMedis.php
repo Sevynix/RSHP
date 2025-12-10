@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DetailRekamMedis extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'detail_rekam_medis';
     protected $primaryKey = 'iddetail_rekam_medis';
     public $timestamps = false;
+    
+    const DELETED_AT = 'deleted_at';
 
     protected $fillable = [
         'idrekam_medis',
@@ -19,7 +22,8 @@ class DetailRekamMedis extends Model
         'idkategori',
         'catatan',
         'biaya',
-        'detail'
+        'detail',
+        'deleted_by',
     ];
 
     // Relationships

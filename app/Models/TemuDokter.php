@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TemuDokter extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'temu_dokter';
     protected $primaryKey = 'idreservasi_dokter';
     public $timestamps = false;
+    
+    const DELETED_AT = 'deleted_at';
 
     protected $fillable = [
         'tanggal',
@@ -19,7 +22,8 @@ class TemuDokter extends Model
         'no_antrian',
         'idpet',
         'status',
-        'idrole_user'
+        'idrole_user',
+        'deleted_by',
     ];
 
     // Relationships

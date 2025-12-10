@@ -3,12 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Perawat extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'perawat';
     protected $primaryKey = 'id_perawat';
     public $timestamps = false;
+    
+    const DELETED_AT = 'deleted_at';
 
     protected $fillable = [
         'id_user',
@@ -16,6 +21,7 @@ class Perawat extends Model
         'no_hp',
         'jenis_kelamin',
         'pendidikan',
+        'deleted_by',
     ];
 
     public function user()
