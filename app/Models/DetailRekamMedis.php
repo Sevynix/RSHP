@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\SoftDeletesWithUser;
 
 class DetailRekamMedis extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletesWithUser;
 
     protected $table = 'detail_rekam_medis';
     protected $primaryKey = 'iddetail_rekam_medis';
@@ -26,7 +26,6 @@ class DetailRekamMedis extends Model
         'deleted_by',
     ];
 
-    // Relationships
     public function rekamMedis()
     {
         return $this->belongsTo(RekamMedis::class, 'idrekam_medis', 'idrekam_medis');

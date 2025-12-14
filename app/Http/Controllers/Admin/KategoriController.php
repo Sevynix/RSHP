@@ -56,12 +56,6 @@ class KategoriController extends Controller
     public function destroy($id)
     {
         $kategori = Kategori::findOrFail($id);
-        
-        // Set deleted_by before soft delete
-        $kategori->deleted_by = Auth::id();
-        $kategori->save();
-        
-        // Perform soft delete
         $kategori->delete();
 
         return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil dihapus!');

@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\SoftDeletesWithUser;
 
 class Pemilik extends Model
 {
-    use SoftDeletes;
+    use SoftDeletesWithUser;
 
     protected $table = 'pemilik';
     protected $primaryKey = 'idpemilik';

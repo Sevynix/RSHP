@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+use App\Traits\SoftDeletesWithUser;
 
-class RoleUser extends Pivot
+class RoleUser extends Model
 {
-    use SoftDeletes;
+    use SoftDeletesWithUser;
 
     protected $table = 'role_user';
     protected $primaryKey = 'idrole_user';

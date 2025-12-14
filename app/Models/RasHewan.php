@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\SoftDeletesWithUser;
 
 class RasHewan extends Model
 {
-    use SoftDeletes;
+    use SoftDeletesWithUser;
 
     protected $table = 'ras_hewan';
     protected $primaryKey = 'idras_hewan';

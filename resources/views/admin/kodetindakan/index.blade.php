@@ -28,7 +28,7 @@
                 @forelse($listData as $data)
                 <tr>
                     <td>{{ $data->idkode_tindakan_terapi }}</td>
-                    <td><span class="badge bg-primary">{{ $data->kode }}</span></td>
+                    <td><span class="badge bg-dark fs-6 px-3 py-2">{{ $data->kode }}</span></td>
                     <td>{{ $data->deskripsi_tindakan_terapi }}</td>
                     <td>{{ $data->kategori->nama_kategori ?? '-' }}</td>
                     <td>{{ $data->kategoriKlinis->nama_kategori_klinis ?? '-' }}</td>

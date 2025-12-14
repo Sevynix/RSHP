@@ -2,10 +2,13 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 
 trait SoftDeletesWithUser
 {
+    use SoftDeletes;
+
     /**
      * Perform soft delete with user tracking
      * 
@@ -35,9 +38,6 @@ trait SoftDeletesWithUser
         return parent::restore();
     }
 
-    /**
-     * Get the user who deleted this record
-     */
     public function deletedBy()
     {
         return $this->belongsTo(\App\Models\User::class, 'deleted_by', 'iduser');

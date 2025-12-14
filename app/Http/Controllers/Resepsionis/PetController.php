@@ -49,7 +49,6 @@ class PetController extends Controller
 
     public function store(Request $request)
     {
-        // Check authorization
         if (session('user_role') != 4) {
             return redirect('/')->with('error', 'Akses ditolak.');
         }

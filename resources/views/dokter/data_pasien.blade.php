@@ -41,7 +41,7 @@
         <div class="card-body">
             @if($pasien->count() > 0)
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table rounded shadow-sm table-hover table-custom-header">
                         <thead>
                             <tr>
                                 <th>Nama Hewan</th>

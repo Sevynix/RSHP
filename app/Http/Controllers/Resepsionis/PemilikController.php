@@ -43,7 +43,6 @@ class PemilikController extends Controller
 
     public function storeNew(Request $request)
     {
-        // Check authorization
         if (session('user_role') != 4) {
             return redirect('/')->with('error', 'Akses ditolak.');
         }
@@ -58,21 +57,18 @@ class PemilikController extends Controller
 
         DB::beginTransaction();
         try {
-            // Create user
             $userId = DB::table('user')->insertGetId([
                 'nama' => $validated['nama'],
                 'email' => $validated['email'],
                 'password' => password_hash($validated['password'], PASSWORD_DEFAULT)
             ]);
 
-            // Create pemilik
             DB::table('pemilik')->insert([
                 'iduser' => $userId,
                 'alamat' => $validated['alamat'],
                 'no_wa' => $validated['no_wa']
             ]);
 
-            // Assign role (5 = pemilik role)
             DB::table('role_user')->insert([
                 'iduser' => $userId,
                 'idrole' => 5
@@ -88,7 +84,6 @@ class PemilikController extends Controller
 
     public function storeExisting(Request $request)
     {
-        // Check authorization
         if (session('user_role') != 4) {
             return redirect('/')->with('error', 'Akses ditolak.');
         }
@@ -108,7 +103,6 @@ class PemilikController extends Controller
                 'no_wa' => $validated['no_wa']
             ]);
 
-            // Assign role (5 = pemilik role)
             DB::table('role_user')->insert([
                 'iduser' => $validated['iduser'],
                 'idrole' => 5

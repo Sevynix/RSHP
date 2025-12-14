@@ -27,6 +27,9 @@ class TemuDokterController extends Controller
             ->leftJoin('user as usr', 'pm.iduser', '=', 'usr.iduser')
             ->leftJoin('role_user as ru', 'td.idrole_user', '=', 'ru.idrole_user')
             ->leftJoin('user as dokter', 'ru.iduser', '=', 'dokter.iduser')
+            ->whereNull('td.deleted_at')
+            ->whereNull('p.deleted_at')
+            ->whereNull('pm.deleted_at')
             ->select(
                 'td.*',
                 'p.nama as nama_pet',
@@ -53,6 +56,8 @@ class TemuDokterController extends Controller
         $petList = DB::table('pet as p')
             ->leftJoin('pemilik as pm', 'p.idpemilik', '=', 'pm.idpemilik')
             ->leftJoin('user as usr', 'pm.iduser', '=', 'usr.iduser')
+            ->whereNull('p.deleted_at')
+            ->whereNull('pm.deleted_at')
             ->select('p.idpet', 'p.nama as nama_pet', 'usr.nama as nama_pemilik')
             ->orderBy('p.nama', 'asc')
             ->get();
@@ -62,6 +67,8 @@ class TemuDokterController extends Controller
             ->join('user as u', 'ru.iduser', '=', 'u.iduser')
             ->where('ru.idrole', 2)
             ->where('ru.status', '1')
+            ->whereNull('ru.deleted_at')
+            ->whereNull('u.deleted_at')
             ->select('ru.idrole_user', 'u.nama')
             ->orderBy('u.nama', 'asc')
             ->get();
@@ -89,14 +96,12 @@ class TemuDokterController extends Controller
         ]);
 
         try {
-            // Get next queue number for today
             $maxNoUrut = DB::table('temu_dokter')
                 ->whereDate('waktu_daftar', today())
                 ->max('no_urut');
             
             $nextNoUrut = $maxNoUrut ? $maxNoUrut + 1 : 1;
 
-            // Create appointment
             DB::table('temu_dokter')->insert([
                 'no_urut' => $nextNoUrut,
                 'waktu_daftar' => now(),

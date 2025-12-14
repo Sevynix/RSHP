@@ -23,7 +23,6 @@ class CheckRole
             'pemilik' => 5
         ];
 
-        // Check if user role matches any of the allowed roles
         foreach ($roles as $role) {
             if (isset($roleMapping[$role]) && $userRole == $roleMapping[$role]) {
                 return $next($request);

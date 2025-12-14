@@ -55,10 +55,21 @@
 
                     <!-- Informasi Rekam Medis -->
                     <div class="alert alert-info mb-3">
-                        <h6><i class="fas fa-file-medical me-2"></i>Informasi Rekam Medis</h6>
-                        <p class="mb-1"><strong>ID:</strong> {{ $record->idrekam_medis }}</p>
-                        <p class="mb-1"><strong>Diagnosa:</strong> {{ $record->diagnosa }}</p>
-                        <p class="mb-0"><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($record->created_at)->format('d/m/Y H:i') }}</p>
+                        <h6 class="mb-3"><i class="fas fa-file-medical me-2"></i>Informasi Rekam Medis</h6>
+                        <table class="table table-borderless table-sm mb-0" style="background-color: transparent; --bs-table-bg: transparent;">
+                            <tr>
+                                <td style="width: 150px; background-color: transparent;"><strong>ID:</strong></td>
+                                <td style="background-color: transparent;">{{ $record->idrekam_medis }}</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: transparent;"><strong>Diagnosa:</strong></td>
+                                <td style="background-color: transparent;">{{ $record->diagnosa }}</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: transparent;"><strong>Tanggal:</strong></td>
+                                <td style="background-color: transparent;">{{ \Carbon\Carbon::parse($record->created_at)->format('d/m/Y H:i') }}</td>
+                            </tr>
+                        </table>
                     </div>
 
                     <!-- Filter Kategori -->

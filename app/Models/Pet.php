@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\SoftDeletesWithUser;
 use Illuminate\Support\Facades\DB;
 
 class Pet extends Model
 {
-    use SoftDeletes;
+    use SoftDeletesWithUser;
 
     protected $table = 'pet';
     protected $primaryKey = 'idpet';
@@ -58,14 +58,13 @@ class Pet extends Model
 
     public function rekamMedis()
     {
-        // Since rekam_medis.idreservasi_dokter can be NULL, we use a custom query
         return $this->hasManyThrough(
             RekamMedis::class,
             TemuDokter::class,
-            'idpet', // Foreign key on temu_dokter table
-            'idreservasi_dokter', // Foreign key on rekam_medis table
-            'idpet', // Local key on pet table
-            'idreservasi_dokter' // Local key on temu_dokter table
+            'idpet',
+            'idreservasi_dokter',
+            'idpet',
+            'idreservasi_dokter'
         )->whereNotNull('rekam_medis.idreservasi_dokter');
     }
 

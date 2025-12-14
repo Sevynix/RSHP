@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\SoftDeletesWithUser;
 
 class TemuDokter extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletesWithUser;
 
     protected $table = 'temu_dokter';
     protected $primaryKey = 'idreservasi_dokter';
@@ -26,7 +26,6 @@ class TemuDokter extends Model
         'deleted_by',
     ];
 
-    // Relationships
     public function pet()
     {
         return $this->belongsTo(Pet::class, 'idpet', 'idpet');

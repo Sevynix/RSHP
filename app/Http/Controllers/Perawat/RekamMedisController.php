@@ -97,7 +97,6 @@ class RekamMedisController extends Controller
 
     public function store(Request $request)
     {
-        // Check authorization
         if (session('user_role') != 3) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
@@ -113,10 +112,8 @@ class RekamMedisController extends Controller
         try {
             DB::beginTransaction();
 
-            // Create medical record
             $rekamMedis = RekamMedis::create($validated);
 
-            // Update reservation status to completed (2)
             DB::table('temu_dokter')
                 ->where('idreservasi_dokter', $validated['idreservasi_dokter'])
                 ->update(['status' => 2]);
@@ -316,7 +313,6 @@ class RekamMedisController extends Controller
 
     public function storeDetail(Request $request, $id)
     {
-        // Check authorization
         if (session('user_role') != 3) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
