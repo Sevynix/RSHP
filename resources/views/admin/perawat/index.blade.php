@@ -41,7 +41,7 @@
                         <a href="{{ route('admin.perawat.edit', $perawat->id_perawat) }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-edit me-1"></i>Edit
                         </a>
-                        <form action="{{ route('admin.perawat.destroy', $perawat->id_perawat) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus perawat {{ $perawat->user ? $perawat->user->nama : 'ini' }}?');">
+                        <form action="{{ route('admin.perawat.destroy', $perawat->id_perawat) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus perawat {{ $perawat->user ? $perawat->user->nama : \'ini\' }}?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">
