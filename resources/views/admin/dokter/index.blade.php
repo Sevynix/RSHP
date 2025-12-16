@@ -29,8 +29,8 @@
                 @forelse($dokters as $dokter)
                 <tr>
                     <td>{{ $dokter->id_dokter }}</td>
-                    <td>{{ $dokter->user->nama }}</td>
-                    <td>{{ $dokter->user->email }}</td>
+                    <td>{{ $dokter->user ? $dokter->user->nama : '-' }}</td>
+                    <td>{{ $dokter->user ? $dokter->user->email : '-' }}</td>
                     <td>{{ $dokter->no_hp }}</td>
                     <td>{{ $dokter->bidang_dokter }}</td>
                     <td>{{ $dokter->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
@@ -41,7 +41,7 @@
                         <a href="{{ route('admin.dokter.edit', $dokter->id_dokter) }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-edit me-1"></i>Edit
                         </a>
-                        <form action="{{ route('admin.dokter.destroy', $dokter->id_dokter) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus dokter {{ $dokter->user->nama }}? Tindakan ini tidak dapat dibatalkan!');">
+                        <form action="{{ route('admin.dokter.destroy', $dokter->id_dokter) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus dokter {{ $dokter->user ? $dokter->user->nama : 'ini' }}?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">

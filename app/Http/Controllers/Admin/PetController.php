@@ -32,7 +32,7 @@ class PetController extends Controller
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 
-        $pemiliks = Pemilik::with('user')->get();
+        $pemiliks = Pemilik::with('user')->whereHas('user')->get();
         $rases = RasHewan::with('jenisHewan')->orderBy('nama_ras')->get();
 
         return view('admin.pet.form', compact('pemiliks', 'rases'));
@@ -75,7 +75,7 @@ class PetController extends Controller
         }
 
         $pet = Pet::findOrFail($id);
-        $pemiliks = Pemilik::with('user')->get();
+        $pemiliks = Pemilik::with('user')->whereHas('user')->get();
         $rases = RasHewan::with('jenisHewan')->orderBy('nama_ras')->get();
 
         return view('admin.pet.form', compact('pet', 'pemiliks', 'rases'));

@@ -94,7 +94,7 @@
                             @foreach($pemiliks as $pemilik)
                                 <option value="{{ $pemilik->idpemilik }}" 
                                     {{ old('idpemilik', $pet->idpemilik ?? '') == $pemilik->idpemilik ? 'selected' : '' }}>
-                                    {{ $pemilik->user->nama }}
+                                    {{ $pemilik->user ? $pemilik->user->nama : 'Pemilik #'.$pemilik->idpemilik }}
                                 </option>
                             @endforeach
                         </select>

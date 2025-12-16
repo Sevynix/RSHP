@@ -215,6 +215,8 @@ class DokterController extends Controller
             ->join('user', 'pemilik.iduser', '=', 'user.iduser')
             ->join('ras_hewan', 'pet.idras_hewan', '=', 'ras_hewan.idras_hewan')
             ->join('jenis_hewan', 'ras_hewan.idjenis_hewan', '=', 'jenis_hewan.idjenis_hewan')
+            ->whereNull('pet.deleted_at')
+            ->whereNull('pemilik.deleted_at')
             ->select(
                 'pet.*',
                 'user.nama as nama_pemilik',

@@ -89,10 +89,14 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin'])->group(functi
     Route::get('/pemilik/create', [PemilikController::class, 'create'])->name('pemilik.create');
     Route::post('/pemilik/store-new', [PemilikController::class, 'storeNew'])->name('pemilik.store-new');
     Route::post('/pemilik/store-existing', [PemilikController::class, 'storeExisting'])->name('pemilik.store-existing');
+    Route::get('/pemilik/{id}/edit', [PemilikController::class, 'edit'])->name('pemilik.edit');
+    Route::put('/pemilik/{id}', [PemilikController::class, 'update'])->name('pemilik.update');
     Route::delete('/pemilik/{id}', [PemilikController::class, 'destroy'])->name('pemilik.destroy');
 
     Route::resource('dokter', DokterController::class);
+    Route::post('/dokter/store-existing', [DokterController::class, 'storeExisting'])->name('dokter.store-existing');
     Route::resource('perawat', PerawatController::class);
+    Route::post('/perawat/store-existing', [PerawatController::class, 'storeExisting'])->name('perawat.store-existing');
 });
 
 Route::prefix('dokter')->name('dokter.')->middleware(['role:dokter'])->group(function () {

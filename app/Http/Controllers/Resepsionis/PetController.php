@@ -20,6 +20,8 @@ class PetController extends Controller
             ->join('user', 'pemilik.iduser', '=', 'user.iduser')
             ->join('ras_hewan', 'pet.idras_hewan', '=', 'ras_hewan.idras_hewan')
             ->join('jenis_hewan', 'ras_hewan.idjenis_hewan', '=', 'jenis_hewan.idjenis_hewan')
+            ->whereNull('pet.deleted_at')
+            ->whereNull('pemilik.deleted_at')
             ->select(
                 'pet.*',
                 'user.nama as nama_pemilik',
@@ -40,6 +42,7 @@ class PetController extends Controller
 
         $pemilik = DB::table('pemilik')
             ->join('user', 'pemilik.iduser', '=', 'user.iduser')
+            ->whereNull('pemilik.deleted_at')
             ->select('pemilik.idpemilik', 'user.nama')
             ->get();
         $rasHewan = DB::table('ras_hewan')->get();
@@ -85,7 +88,10 @@ class PetController extends Controller
             return redirect('/')->with('error', 'Akses ditolak.');
         }
 
-        $pet = DB::table('pet')->where('idpet', $id)->first();
+        $pet = DB::table('pet')
+            ->where('idpet', $id)
+            ->whereNull('deleted_at')
+            ->first();
         
         if (!$pet) {
             return redirect()->route('resepsionis.pet.index')->with('error', 'Data pet tidak ditemukan.');
@@ -93,6 +99,7 @@ class PetController extends Controller
 
         $pemilik = DB::table('pemilik')
             ->join('user', 'pemilik.iduser', '=', 'user.iduser')
+            ->whereNull('pemilik.deleted_at')
             ->select('pemilik.idpemilik', 'user.nama')
             ->get();
         $rasHewan = DB::table('ras_hewan')->get();
@@ -140,7 +147,10 @@ class PetController extends Controller
         }
 
         try {
-            DB::table('pet')->where('idpet', $id)->delete();
+            DB::table('pet')->where('idpet', $id)->update([
+                'deleted_at' => now(),
+                'deleted_by' => session('user_id')
+            ]);
             return redirect()->route('resepsionis.pet.index')->with('success', 'Data pet berhasil dihapus.');
         } catch (\Exception $e) {
             return back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());

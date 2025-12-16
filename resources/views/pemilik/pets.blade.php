@@ -194,24 +194,6 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="card-footer bg-light">
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="{{ route('pemilik.jadwal') }}?pet={{ $pet->idpet }}" 
-                                       class="btn btn-outline-primary btn-sm w-100">
-                                        <i class="fas fa-calendar me-1"></i>
-                                        Riwayat Kunjungan
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="{{ route('pemilik.rekam-medis') }}?pet={{ $pet->idpet }}" 
-                                       class="btn btn-outline-success btn-sm w-100">
-                                        <i class="fas fa-file-medical me-1"></i>
-                                        Rekam Medis
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             @endforeach

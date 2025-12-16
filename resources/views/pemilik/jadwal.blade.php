@@ -211,7 +211,6 @@
                             <ul class="mb-0">
                                 <li><span class="badge bg-warning text-white me-1">MENUNGGU</span> - Kunjungan yang telah dijadwalkan dan sedang menunggu giliran</li>
                                 <li><span class="badge bg-success text-white me-1">SELESAI</span> - Kunjungan yang sudah selesai dilakukan</li>
-                                <li><span class="badge bg-secondary text-white me-1">DIBATALKAN</span> - Kunjungan yang dibatalkan</li>
                             </ul>
                         </div>
                     </div>

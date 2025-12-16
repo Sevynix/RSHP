@@ -87,9 +87,13 @@ class RekamMedisController extends Controller
 
         // Get all doctors
         $dokters = DB::table('user as u')
+            ->join('dokter as d', 'u.iduser', '=', 'd.id_user')
             ->join('role_user as ru', 'u.iduser', '=', 'ru.iduser')
-            ->where('ru.idrole', 2) // Role dokter
-            ->select('u.iduser', 'u.nama')
+            ->where('ru.idrole', 2)
+            ->whereNull('d.deleted_at')
+            ->whereNull('u.deleted_at')
+            ->select('ru.idrole_user', 'u.nama')
+            ->distinct()
             ->get();
 
         return view('perawat.rekammedis.create', compact('reservations', 'dokters'));
@@ -223,9 +227,13 @@ class RekamMedisController extends Controller
 
         // Get all doctors
         $dokters = DB::table('user as u')
+            ->join('dokter as d', 'u.iduser', '=', 'd.id_user')
             ->join('role_user as ru', 'u.iduser', '=', 'ru.iduser')
             ->where('ru.idrole', 2)
-            ->select('u.iduser', 'u.nama')
+            ->whereNull('d.deleted_at')
+            ->whereNull('u.deleted_at')
+            ->select('ru.idrole_user', 'u.nama')
+            ->distinct()
             ->get();
 
         return view('perawat.rekammedis.edit', compact('record', 'reservations', 'dokters'));

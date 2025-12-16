@@ -16,7 +16,7 @@ class AdminController extends Controller
         try {
             $totalUsers = DB::table('user')->count();
             $totalPemilik = DB::table('pemilik')->count();
-            $totalPets = DB::table('pet')->count();
+            $totalPets = DB::table('pet')->whereNull('deleted_at')->count();
             $totalKategori = DB::table('kategori')->count();
             $totalKategoriKlinis = DB::table('kategori_klinis')->count();
             $totalKodeTindakan = DB::table('kode_tindakan_terapi')->count();

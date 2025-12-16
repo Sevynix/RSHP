@@ -28,6 +28,7 @@ class PerawatController extends Controller
             $pendingReservations = DB::table('temu_dokter')
                 ->where('status', 1)
                 ->whereDate('waktu_daftar', now()->toDateString())
+                ->whereNull('deleted_at')
                 ->count();
             
             $recentRecords = DB::table('rekam_medis as rm')
@@ -35,6 +36,9 @@ class PerawatController extends Controller
                 ->join('pet as p', 'td.idpet', '=', 'p.idpet')
                 ->join('pemilik as pm', 'p.idpemilik', '=', 'pm.idpemilik')
                 ->join('user as u', 'pm.iduser', '=', 'u.iduser')
+                ->whereNull('td.deleted_at')
+                ->whereNull('p.deleted_at')
+                ->whereNull('pm.deleted_at')
                 ->select(
                     'rm.idrekam_medis',
                     'p.nama as nama_pet',
@@ -53,6 +57,9 @@ class PerawatController extends Controller
                 ->join('role_user as ru', 'td.idrole_user', '=', 'ru.idrole_user')
                 ->join('user as doc', 'ru.iduser', '=', 'doc.iduser')
                 ->whereDate('td.waktu_daftar', now()->toDateString())
+                ->whereNull('td.deleted_at')
+                ->whereNull('p.deleted_at')
+                ->whereNull('pm.deleted_at')
                 ->select(
                     'td.idreservasi_dokter',
                     'td.no_urut',
@@ -190,6 +197,8 @@ class PerawatController extends Controller
             ->join('user', 'pemilik.iduser', '=', 'user.iduser')
             ->join('ras_hewan', 'pet.idras_hewan', '=', 'ras_hewan.idras_hewan')
             ->join('jenis_hewan', 'ras_hewan.idjenis_hewan', '=', 'jenis_hewan.idjenis_hewan')
+            ->whereNull('pet.deleted_at')
+            ->whereNull('pemilik.deleted_at')
             ->select(
                 'pet.*',
                 'user.nama as nama_pemilik',

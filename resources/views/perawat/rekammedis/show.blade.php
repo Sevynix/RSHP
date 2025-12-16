@@ -145,7 +145,7 @@
                                 <tbody>
                                     @foreach($details as $detail)
                                     <tr>
-                                        <td><span class="badge bg-primary">{{ $detail->kode ?? 'N/A' }}</span></td>
+                                        <td><span class="badge bg-dark fs-6 px-3 py-2">{{ $detail->kode ?? 'N/A' }}</span></td>
                                         <td>{{ $detail->deskripsi_tindakan_terapi ?? 'N/A' }}</td>
                                         <td><span class="badge bg-secondary">{{ $detail->nama_kategori ?? 'N/A' }}</span></td>
                                         <td>

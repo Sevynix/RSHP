@@ -96,6 +96,77 @@
         </div>
     </div>
     
+    <!-- Antrian Tertunda dari Hari Sebelumnya -->
+    @if($expiredList->count() > 0)
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="alert alert-warning border-warning d-flex align-items-center" role="alert" style="background-color: #fff3cd;">
+                <i class="fas fa-exclamation-triangle me-3 text-warning" style="font-size: 1.5rem;"></i>
+                <div>
+                    <strong class="text-dark">Antrian Tertunda dari Hari Sebelumnya ({{ $expiredList->count() }} antrian)</strong>
+                    <p class="mb-0 mt-1 text-dark">Perhatian: Ada antrian dari hari sebelumnya yang masih menunggu. Silakan koordinasi dengan Perawat untuk menangani.</p>
+                </div>
+            </div>
+            
+            <div class="card border-warning" style="border-width: 2px;">
+                <div class="card-header" style="background-color: #fff3cd; border-bottom: 2px solid #ffc107;">
+                    <h5 class="card-title mb-0" style="color: #856404;">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Antrian Kadaluwarsa
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm">
+                            <thead style="background-color: #fff3cd;">
+                                <tr>
+                                    <th scope="col" class="text-center" style="color: #856404;">Tanggal</th>
+                                    <th scope="col" class="text-center" style="color: #856404;">#</th>
+                                    <th scope="col" class="text-center" style="color: #856404;">Waktu</th>
+                                    <th scope="col" class="text-center" style="color: #856404;">Pemilik</th>
+                                    <th scope="col" class="text-center" style="color: #856404;">Pet</th>
+                                    <th scope="col" class="text-center" style="color: #856404;">Dokter</th>
+                                    <th scope="col" class="text-center" style="color: #856404;">Status</th>
+                                    <th scope="col" class="text-center" style="color: #856404;">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($expiredList as $antrian)
+                                <tr style="background-color: #fffbf0;">
+                                    <td class="text-center">
+                                        <strong style="color: #856404;">{{ \Carbon\Carbon::parse($antrian->waktu_daftar)->format('d-m-Y') }}</strong><br>
+                                        <small class="badge" style="background-color: #ffc107; color: #000;">{{ \Carbon\Carbon::parse($antrian->waktu_daftar)->diffForHumans() }}</small>
+                                    </td>
+                                    <td class="text-center">{{ $antrian->no_urut }}</td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($antrian->waktu_daftar)->format('H:i') }}</td>
+                                    <td class="text-center">{{ $antrian->nama_pemilik }}</td>
+                                    <td class="text-center">{{ $antrian->nama_pet }}</td>
+                                    <td class="text-center">{{ $antrian->nama_dokter }}</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-warning text-dark">
+                                            <i class="fas fa-clock me-1"></i>TERTUNDA
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <form method="POST" action="{{ route('resepsionis.temudokter.complete') }}" style="display: inline;">
+                                            @csrf
+                                            <input type="hidden" name="no_urut" value="{{ $antrian->no_urut }}">
+                                            <button type="submit" class="btn btn-success btn-sm" 
+                                                    onclick="return confirm('Tandai sebagai selesai?')" title="Selesaikan">
+                                                <i class="fas fa-check"></i> Selesaikan
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    
     <!-- Informasi -->
     <div class="row mt-4">
         <div class="col-12">

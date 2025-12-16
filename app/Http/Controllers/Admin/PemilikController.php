@@ -33,8 +33,11 @@ class PemilikController extends Controller
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 
+        // Exclude users who are active pemilik (not soft deleted)
         $availableUsers = User::whereNotIn('iduser', function ($query) {
-            $query->select('iduser')->from('pemilik');
+            $query->select('iduser')
+                ->from('pemilik')
+                ->whereNull('deleted_at'); // Only exclude active pemilik
         })
         ->select('iduser', 'nama', 'email')
         ->orderBy('nama')
@@ -113,28 +116,115 @@ class PemilikController extends Controller
         ]);
 
         try {
+            // Check if user already has an active pemilik record
             $existingPemilik = Pemilik::where('iduser', $validated['iduser'])->first();
             if ($existingPemilik) {
                 return redirect()->back()
                     ->with('error', 'User ini sudah menjadi pemilik');
             }
 
-            Pemilik::create([
-                'iduser' => $validated['iduser'],
-                'no_wa' => $validated['no_wa'] ?? null,
-                'alamat' => $validated['alamat'] ?? null,
-            ]);
+            // Check if there's a soft deleted pemilik record
+            $deletedPemilik = Pemilik::withTrashed()->where('iduser', $validated['iduser'])->onlyTrashed()->first();
+            
+            if ($deletedPemilik) {
+                // Restore the soft deleted record and update the data
+                $deletedPemilik->restore();
+                $deletedPemilik->update([
+                    'no_wa' => $validated['no_wa'] ?? null,
+                    'alamat' => $validated['alamat'] ?? null,
+                ]);
+                $message = "User berhasil dikembalikan sebagai pemilik";
+            } else {
+                // Create new pemilik record
+                Pemilik::create([
+                    'iduser' => $validated['iduser'],
+                    'no_wa' => $validated['no_wa'] ?? null,
+                    'alamat' => $validated['alamat'] ?? null,
+                ]);
+                $message = "User berhasil dijadikan pemilik";
+            }
 
             $user = User::find($validated['iduser']);
 
             return redirect()->route('admin.pemilik.index')
-                ->with('success', "User '{$user->nama}' berhasil dijadikan pemilik");
+                ->with('success', "'{$user->nama}' {$message}");
         } catch (\Exception $e) {
             Log::error('Error creating pemilik from existing user: ' . $e->getMessage());
 
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Gagal menjadikan user sebagai pemilik: ' . $e->getMessage());
+        }
+    }
+
+    public function edit($id)
+    {
+        // Only allow admin (role 1)
+        if (session('user_role') != 1) {
+            return redirect()->route('login')->with('error', 'Unauthorized access');
+        }
+
+        $pemilik = Pemilik::with('user')->findOrFail($id);
+        return view('admin.pemilik.edit', compact('pemilik'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Only allow admin (role 1)
+        if (session('user_role') != 1) {
+            return redirect()->route('login')->with('error', 'Unauthorized access');
+        }
+
+        $pemilik = Pemilik::with('user')->findOrFail($id);
+
+        $validated = $request->validate([
+            'nama' => 'required|string|max:100',
+            'email' => 'required|email|unique:user,email,' . $pemilik->iduser . ',iduser|max:100',
+            'password' => ['nullable', 'confirmed', Password::min(6)],
+            'no_wa' => 'nullable|regex:/^08[0-9]{8,11}$/|max:15',
+            'alamat' => 'nullable|string|max:255',
+        ], [
+            'nama.required' => 'Nama harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Format email tidak valid',
+            'email.unique' => 'Email sudah digunakan',
+            'password.confirmed' => 'Konfirmasi password tidak cocok',
+            'password.min' => 'Password minimal 6 karakter',
+            'no_wa.regex' => 'Format nomor WhatsApp tidak valid. Gunakan format: 08xxxxxxxxxx',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            // Update user
+            $userData = [
+                'nama' => $validated['nama'],
+                'email' => $validated['email'],
+            ];
+
+            if ($request->filled('password')) {
+                $userData['password'] = Hash::make($validated['password']);
+            }
+
+            $pemilik->user->update($userData);
+
+            // Update pemilik
+            $pemilik->update([
+                'no_wa' => $validated['no_wa'] ?? null,
+                'alamat' => $validated['alamat'] ?? null,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('admin.pemilik.index')
+                ->with('success', "Data pemilik '{$validated['nama']}' berhasil diperbarui");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error updating pemilik: ' . $e->getMessage());
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal memperbarui data pemilik: ' . $e->getMessage());
         }
     }
 
@@ -149,7 +239,7 @@ class PemilikController extends Controller
             $pemilik = Pemilik::with('user')->findOrFail($id);
             $userName = $pemilik->user->nama;
 
-            $hasPets = DB::table('pet')->where('idpemilik', $id)->exists();
+            $hasPets = DB::table('pet')->where('idpemilik', $id)->whereNull('deleted_at')->exists();
             if ($hasPets) {
                 return redirect()->route('admin.pemilik.index')
                     ->with('error', 'Pemilik tidak dapat dihapus karena masih memiliki pet');

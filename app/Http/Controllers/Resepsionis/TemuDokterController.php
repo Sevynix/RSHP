@@ -40,7 +40,28 @@ class TemuDokterController extends Controller
             ->orderBy('td.no_urut', 'asc')
             ->get();
 
-        return view('resepsionis.temudokter', compact('antrianList'));
+        // Get expired appointments (status menunggu tapi sudah lewat)
+        $expiredList = DB::table('temu_dokter as td')
+            ->leftJoin('pet as p', 'td.idpet', '=', 'p.idpet')
+            ->leftJoin('pemilik as pm', 'p.idpemilik', '=', 'pm.idpemilik')
+            ->leftJoin('user as usr', 'pm.iduser', '=', 'usr.iduser')
+            ->leftJoin('role_user as ru', 'td.idrole_user', '=', 'ru.idrole_user')
+            ->leftJoin('user as dokter', 'ru.iduser', '=', 'dokter.iduser')
+            ->where('td.status', 1)
+            ->whereDate('td.waktu_daftar', '<', today())
+            ->whereNull('td.deleted_at')
+            ->whereNull('p.deleted_at')
+            ->whereNull('pm.deleted_at')
+            ->select(
+                'td.*',
+                'p.nama as nama_pet',
+                'usr.nama as nama_pemilik',
+                'dokter.nama as nama_dokter'
+            )
+            ->orderBy('td.waktu_daftar', 'desc')
+            ->get();
+
+        return view('resepsionis.temudokter', compact('antrianList', 'expiredList'));
     }
 
     /**

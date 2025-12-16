@@ -175,6 +175,7 @@ class RekamMedisController extends Controller
             ->join('kode_tindakan_terapi as ktt', 'drm.idkode_tindakan_terapi', '=', 'ktt.idkode_tindakan_terapi')
             ->join('kategori as k', 'ktt.idkategori', '=', 'k.idkategori')
             ->where('drm.idrekam_medis', $id)
+            ->whereNull('drm.deleted_at')
             ->select(
                 'drm.*',
                 'ktt.kode',

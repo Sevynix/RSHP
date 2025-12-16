@@ -48,6 +48,7 @@ class PemilikController extends Controller
             ->join('ras_hewan', 'pet.idras_hewan', '=', 'ras_hewan.idras_hewan')
             ->join('jenis_hewan', 'ras_hewan.idjenis_hewan', '=', 'jenis_hewan.idjenis_hewan')
             ->where('pet.idpemilik', $pemilik->idpemilik)
+            ->whereNull('pet.deleted_at')
             ->select('pet.nama AS nama', 'ras_hewan.nama_ras', 'jenis_hewan.nama_jenis_hewan')
             ->limit(4)
             ->get()
@@ -59,6 +60,8 @@ class PemilikController extends Controller
             ->leftJoin('role_user', 'temu_dokter.idrole_user', '=', 'role_user.idrole_user')
             ->leftJoin('user', 'role_user.iduser', '=', 'user.iduser')
             ->where('pet.idpemilik', $pemilik->idpemilik)
+            ->whereNull('temu_dokter.deleted_at')
+            ->whereNull('pet.deleted_at')
             ->select(
                 DB::raw("'reservation' AS type"),
                 'temu_dokter.status',
@@ -76,6 +79,8 @@ class PemilikController extends Controller
             ->join('pet', 'temu_dokter.idpet', '=', 'pet.idpet')
             ->leftJoin('user', 'rekam_medis.dokter_pemeriksa', '=', 'user.iduser')
             ->where('pet.idpemilik', $pemilik->idpemilik)
+            ->whereNull('temu_dokter.deleted_at')
+            ->whereNull('pet.deleted_at')
             ->select(
                 DB::raw("'medical_record' AS type"),
                 DB::raw('NULL AS status'),

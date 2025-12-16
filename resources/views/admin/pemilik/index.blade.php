@@ -50,6 +50,9 @@
                         @endif
                     </td>
                     <td>
+                        <a href="{{ route('admin.pemilik.edit', $pemilik->idpemilik) }}" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit me-1"></i>Edit
+                        </a>
                         <form action="{{ route('admin.pemilik.destroy', $pemilik->idpemilik) }}" method="POST" class="d-inline" onsubmit="return confirm('Anda yakin ingin menghapus pemilik ini? Relasi user tidak akan terhapus.');">
                             @csrf
                             @method('DELETE')

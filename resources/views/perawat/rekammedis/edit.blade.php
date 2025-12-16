@@ -106,8 +106,8 @@
                                         name="dokter_pemeriksa" required>
                                     <option value="">Pilih Dokter</option>
                                     @foreach($dokters as $dokter)
-                                        <option value="{{ $dokter->iduser }}" 
-                                                {{ (old('dokter_pemeriksa', $record->dokter_pemeriksa) == $dokter->iduser) ? 'selected' : '' }}>
+                                        <option value="{{ $dokter->idrole_user }}" 
+                                                {{ (old('dokter_pemeriksa', $record->dokter_pemeriksa) == $dokter->idrole_user) ? 'selected' : '' }}>
                                             {{ $dokter->nama }}
                                         </option>
                                     @endforeach

@@ -3,34 +3,46 @@
 @section('title', 'Tambah Perawat')
 @section('page-title', 'Tambah Perawat')
 
+@push('scripts')
+<script>
+function selectMethod(method) {
+    // Hide both forms
+    document.getElementById('form-new').style.display = 'none';
+    document.getElementById('form-existing').style.display = 'none';
+    
+    // Reset button styles
+    document.getElementById('btn-new').className = 'btn btn-outline-primary';
+    document.getElementById('btn-existing').className = 'btn btn-outline-secondary';
+    
+    if (method === 'new') {
+        document.getElementById('form-new').style.display = 'block';
+        document.getElementById('btn-new').className = 'btn btn-primary';
+    } else {
+        document.getElementById('form-existing').style.display = 'block';
+        document.getElementById('btn-existing').className = 'btn btn-secondary';
+    }
+}
+
+// Show new form by default
+document.addEventListener('DOMContentLoaded', function() {
+    selectMethod('new');
+});
+</script>
+@endpush
+
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-12 col-lg-10 col-xl-8">
-        <div class="form-wrapper-test rounded shadow-sm">
-            <div class="form-info-panel d-none d-lg-flex flex-column">
-                <div class="mb-4">
-                    <h3 class="d-flex align-items-center">
-                        <i class="fas fa-user-nurse me-2"></i> 
-                        <span>Tambah Perawat</span>
-                    </h3>
-                </div>
-                <p class="mt-2 text-white-50">
-                    Silakan isi detail di sebelah kanan untuk menambah perawat baru ke dalam sistem. 
-                    Pastikan semua data yang dimasukkan sudah benar dan valid.
-                </p>
-                <div class="mt-auto">
-                    <p class="mb-0 text-white-50">
-                        <i class="fas fa-info-circle me-2"></i>
-                        Semua field wajib diisi
-                    </p>
-                </div>
+    <div class="col-12 col-md-10">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white d-flex align-items-center">
+                <i class="fas fa-user-nurse me-2"></i>
+                <h5 class="mb-0">Tambah Perawat Baru</h5>
             </div>
-            <div class="form-body">
-                <h4 class="fs-4 mb-4 d-lg-none d-flex align-items-center">
-                    <i class="fas fa-user-nurse me-2"></i>
-                    Tambah Perawat Baru
-                </h4>
-                
+            <div class="card-body">
+                @if(session('error'))
+                    <x-alert type="error" :message="session('error')" />
+                @endif
+
                 @if($errors->any())
                     <div class="alert alert-danger d-flex align-items-center">
                         <i class="fas fa-exclamation-circle me-2"></i>
@@ -44,130 +56,182 @@
                     </div>
                 @endif
                 
-                <form action="{{ route('admin.perawat.store') }}" method="POST" class="needs-validation" novalidate>
-                    @csrf
-                    
-                    <div class="mb-3">
-                        <label for="nama" class="form-label">
-                            <i class="fas fa-user me-2"></i>Nama Lengkap <span class="text-danger">*</span>
-                        </label>
-                        <input type="text" 
-                               name="nama" 
-                               id="nama" 
-                               class="form-control @error('nama') is-invalid @enderror" 
-                               value="{{ old('nama') }}"
-                               required
-                               placeholder="Masukkan nama lengkap perawat">
-                        @error('nama')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="email" class="form-label">
-                            <i class="fas fa-envelope me-2"></i>Email <span class="text-danger">*</span>
-                        </label>
-                        <input type="email" 
-                               name="email" 
-                               id="email" 
-                               class="form-control @error('email') is-invalid @enderror" 
-                               value="{{ old('email') }}"
-                               required
-                               placeholder="contoh@email.com">
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="password" class="form-label">
-                            <i class="fas fa-lock me-2"></i>Password <span class="text-danger">*</span>
-                        </label>
-                        <input type="password" 
-                               name="password" 
-                               id="password" 
-                               class="form-control @error('password') is-invalid @enderror" 
-                               required
-                               placeholder="Minimal 6 karakter"
-                               minlength="6">
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="alamat" class="form-label">
-                            <i class="fas fa-map-marker-alt me-2"></i>Alamat <span class="text-danger">*</span>
-                        </label>
-                        <textarea name="alamat" 
-                                  id="alamat" 
-                                  class="form-control @error('alamat') is-invalid @enderror" 
-                                  rows="3"
-                                  required
-                                  placeholder="Masukkan alamat lengkap">{{ old('alamat') }}</textarea>
-                        @error('alamat')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="no_hp" class="form-label">
-                            <i class="fas fa-phone me-2"></i>No HP <span class="text-danger">*</span>
-                        </label>
-                        <input type="text" 
-                               name="no_hp" 
-                               id="no_hp" 
-                               class="form-control @error('no_hp') is-invalid @enderror" 
-                               value="{{ old('no_hp') }}"
-                               required
-                               placeholder="08xxxxxxxxxx">
-                        @error('no_hp')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="pendidikan" class="form-label">
-                            <i class="fas fa-graduation-cap me-2"></i>Pendidikan <span class="text-danger">*</span>
-                        </label>
-                        <input type="text" 
-                               name="pendidikan" 
-                               id="pendidikan" 
-                               class="form-control @error('pendidikan') is-invalid @enderror" 
-                               value="{{ old('pendidikan') }}"
-                               required
-                               placeholder="Contoh: D3 Keperawatan, S1 Keperawatan, dll">
-                        @error('pendidikan')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="jenis_kelamin" class="form-label">
-                            <i class="fas fa-venus-mars me-2"></i>Jenis Kelamin <span class="text-danger">*</span>
-                        </label>
-                        <select name="jenis_kelamin" 
-                                id="jenis_kelamin" 
-                                class="form-select @error('jenis_kelamin') is-invalid @enderror" 
-                                required>
-                            <option value="">Pilih Jenis Kelamin</option>
-                            <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
-                        </select>
-                        @error('jenis_kelamin')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    
-                    <div class="mt-4 d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-2"></i>Simpan Perawat
+                <!-- Method Selection -->
+                <div class="mb-3">
+                    <label class="form-label">Pilih Metode Penambahan:</label>
+                    <div class="d-flex gap-3">
+                        <button type="button" class="btn btn-outline-primary" id="btn-new" onclick="selectMethod('new')">
+                            <i class="fas fa-user-plus me-2"></i>Buat User & Perawat Baru
                         </button>
-                        <a href="{{ route('admin.perawat.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-times me-2"></i>Batal
-                        </a>
+                        <button type="button" class="btn btn-outline-secondary" id="btn-existing" onclick="selectMethod('existing')">
+                            <i class="fas fa-user-check me-2"></i>Gunakan User yang Ada
+                        </button>
                     </div>
-                </form>
+                </div>
+                
+                <!-- Create New User Form -->
+                <div id="form-new">
+                    <h6 class="border-bottom pb-2 mb-3"><i class="fas fa-file-alt me-2"></i>Formulir User & Perawat Baru</h6>
+                    <form action="{{ route('admin.perawat.store') }}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="nama" class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" required placeholder="Masukkan nama lengkap">
+                                    @error('nama')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required placeholder="contoh@email.com">
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required placeholder="Minimal 6 karakter" minlength="6">
+                                    @error('password')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="no_hp" class="form-label">No HP <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required placeholder="08xxxxxxxxxx">
+                                    @error('no_hp')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="pendidikan" class="form-label">Pendidikan <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('pendidikan') is-invalid @enderror" id="pendidikan" name="pendidikan" value="{{ old('pendidikan') }}" required placeholder="D3/S1 Keperawatan, dll">
+                                    @error('pendidikan')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="jenis_kelamin" class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
+                                    <select name="jenis_kelamin" id="jenis_kelamin" class="form-select @error('jenis_kelamin') is-invalid @enderror" required>
+                                        <option value="">Pilih Jenis Kelamin</option>
+                                        <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                                        <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
+                                    </select>
+                                    @error('jenis_kelamin')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="alamat" class="form-label">Alamat <span class="text-danger">*</span></label>
+                            <textarea name="alamat" id="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3" required placeholder="Masukkan alamat lengkap">{{ old('alamat') }}</textarea>
+                            @error('alamat')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Buat User & Perawat
+                            </button>
+                            <a href="{{ route('admin.perawat.index') }}" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Batal
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Use Existing User Form -->
+                <div id="form-existing" style="display: none;">
+                    <h6 class="border-bottom pb-2 mb-3"><i class="fas fa-user-check me-2"></i>Gunakan User yang Ada</h6>
+                    <form action="{{ route('admin.perawat.store-existing') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="iduser" class="form-label">Pilih User <span class="text-danger">*</span></label>
+                            <select name="iduser" id="iduser" class="form-select @error('iduser') is-invalid @enderror" required>
+                                <option value="">-- Pilih User --</option>
+                                @foreach($availableUsers as $user)
+                                    <option value="{{ $user->iduser }}" {{ old('iduser') == $user->iduser ? 'selected' : '' }}>
+                                        {{ $user->nama }} ({{ $user->email }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            <small class="text-muted">Hanya user yang belum menjadi perawat yang ditampilkan</small>
+                            @error('iduser')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="no_hp_existing" class="form-label">No HP <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp_existing" name="no_hp" value="{{ old('no_hp') }}" required placeholder="08xxxxxxxxxx">
+                                    @error('no_hp')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="pendidikan_existing" class="form-label">Pendidikan <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('pendidikan') is-invalid @enderror" id="pendidikan_existing" name="pendidikan" value="{{ old('pendidikan') }}" required placeholder="D3/S1 Keperawatan, dll">
+                                    @error('pendidikan')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="jenis_kelamin_existing" class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
+                                    <select name="jenis_kelamin" id="jenis_kelamin_existing" class="form-select @error('jenis_kelamin') is-invalid @enderror" required>
+                                        <option value="">Pilih Jenis Kelamin</option>
+                                        <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                                        <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
+                                    </select>
+                                    @error('jenis_kelamin')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="alamat_existing" class="form-label">Alamat <span class="text-danger">*</span></label>
+                                    <textarea name="alamat" id="alamat_existing" class="form-control @error('alamat') is-invalid @enderror" rows="3" required placeholder="Masukkan alamat lengkap">{{ old('alamat') }}</textarea>
+                                    @error('alamat')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Jadikan Perawat
+                            </button>
+                            <a href="{{ route('admin.perawat.index') }}" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Batal
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
