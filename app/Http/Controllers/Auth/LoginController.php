@@ -43,7 +43,6 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        // If user is already logged in, redirect to appropriate dashboard
         if (session('logged_in')) {
             $userRole = session('user_role');
             
@@ -119,7 +118,6 @@ class LoginController extends Controller
         
         Log::info('sendLoginResponse - redirecting', ['user_role' => $userRole, 'idpemilik' => session('idpemilik')]);
 
-        // Route based on role ID
         if ($userRole == 1 || $userRole === '1') {
             return redirect('admin/dashboard');
         } elseif ($userRole == 2 || $userRole === '2') {
@@ -145,7 +143,6 @@ class LoginController extends Controller
     {
         $credentials = $this->credentials($request);
 
-        // Tier 1: Check user with active role (status = '1')
         $userWithRole = DB::table('user as u')
             ->leftJoin('role_user as ru', function($query) {
                 $query->on('ru.iduser', '=', 'u.iduser')
@@ -158,7 +155,6 @@ class LoginController extends Controller
             ->first();
 
         if ($userWithRole && Auth::attempt($credentials, $request->filled('remember'))) {
-            // Set custom session data for role-based user
             $request->session()->put([
                 'logged_in' => true,
                 'user_id' => $userWithRole->iduser,
@@ -172,7 +168,6 @@ class LoginController extends Controller
                 'role' => $userWithRole->nama_role ?? 'User'
             ]);
 
-            // Force session save
             $request->session()->save();
 
             Log::info('User logged in with role', [
@@ -184,10 +179,8 @@ class LoginController extends Controller
             return true;
         }
 
-        // Logout if authenticated (to try next tier)
         Auth::logout();
 
-        // Tier 2: Check if user is pemilik (pet owner)
         $pemilik = DB::table('user as u')
             ->join('pemilik as p', 'p.iduser', '=', 'u.iduser')
             ->select('u.iduser', 'u.nama', 'u.email', 'u.password', 'p.idpemilik')
@@ -195,7 +188,6 @@ class LoginController extends Controller
             ->first();
 
         if ($pemilik && Auth::attempt($credentials, $request->filled('remember'))) {
-            // Set custom session data for pemilik
             $request->session()->put([
                 'logged_in' => true,
                 'user_id' => $pemilik->iduser,
@@ -210,7 +202,6 @@ class LoginController extends Controller
                 'role' => 'Pemilik'
             ]);
 
-            // Force session save
             $request->session()->save();
 
             Log::info('User logged in as pemilik', [
@@ -221,14 +212,11 @@ class LoginController extends Controller
             return true;
         }
 
-        // Logout if authenticated (to try next tier)
         Auth::logout();
 
-        // Tier 3: Check regular user (no role, not pemilik)
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $user = Auth::user();
             
-            // Set custom session data for regular user
             $request->session()->put([
                 'logged_in' => true,
                 'user_id' => $user->iduser,
@@ -258,10 +246,8 @@ class LoginController extends Controller
     {
         $userRole = session('user_role');
 
-        // Debug: Log the user role
         Log::info('Login redirect - user_role: ' . $userRole);
 
-        // Route based on role ID
         switch ((int)$userRole) {
             case 1:
                 return '/admin/dashboard';
@@ -272,7 +258,6 @@ class LoginController extends Controller
             case 4:
                 return '/resepsionis/dashboard';
             default:
-                // Check if pemilik
                 if (session('idpemilik')) {
                     return '/pemilik/dashboard';
                 }
@@ -298,7 +283,6 @@ class LoginController extends Controller
             'idpemilik' => session('idpemilik')
         ]);
 
-        // Route based on role ID - using strict comparison
         if ($userRole == 1 || $userRole === '1') {
             Log::info('Redirecting to admin dashboard');
             return redirect('admin/dashboard');

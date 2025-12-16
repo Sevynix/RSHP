@@ -15,7 +15,6 @@ class PemilikController extends Controller
 {
     public function index()
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
@@ -33,11 +32,10 @@ class PemilikController extends Controller
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 
-        // Exclude users who are active pemilik (not soft deleted)
         $availableUsers = User::whereNotIn('iduser', function ($query) {
             $query->select('iduser')
                 ->from('pemilik')
-                ->whereNull('deleted_at'); // Only exclude active pemilik
+                ->whereNull('deleted_at'); 
         })
         ->select('iduser', 'nama', 'email')
         ->orderBy('nama')
@@ -100,7 +98,6 @@ class PemilikController extends Controller
 
     public function storeExisting(Request $request)
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
@@ -116,18 +113,15 @@ class PemilikController extends Controller
         ]);
 
         try {
-            // Check if user already has an active pemilik record
             $existingPemilik = Pemilik::where('iduser', $validated['iduser'])->first();
             if ($existingPemilik) {
                 return redirect()->back()
                     ->with('error', 'User ini sudah menjadi pemilik');
             }
 
-            // Check if there's a soft deleted pemilik record
             $deletedPemilik = Pemilik::withTrashed()->where('iduser', $validated['iduser'])->onlyTrashed()->first();
             
             if ($deletedPemilik) {
-                // Restore the soft deleted record and update the data
                 $deletedPemilik->restore();
                 $deletedPemilik->update([
                     'no_wa' => $validated['no_wa'] ?? null,
@@ -135,7 +129,6 @@ class PemilikController extends Controller
                 ]);
                 $message = "User berhasil dikembalikan sebagai pemilik";
             } else {
-                // Create new pemilik record
                 Pemilik::create([
                     'iduser' => $validated['iduser'],
                     'no_wa' => $validated['no_wa'] ?? null,
@@ -159,7 +152,6 @@ class PemilikController extends Controller
 
     public function edit($id)
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
@@ -170,7 +162,6 @@ class PemilikController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
@@ -196,7 +187,6 @@ class PemilikController extends Controller
         try {
             DB::beginTransaction();
 
-            // Update user
             $userData = [
                 'nama' => $validated['nama'],
                 'email' => $validated['email'],
@@ -208,7 +198,6 @@ class PemilikController extends Controller
 
             $pemilik->user->update($userData);
 
-            // Update pemilik
             $pemilik->update([
                 'no_wa' => $validated['no_wa'] ?? null,
                 'alamat' => $validated['alamat'] ?? null,
@@ -230,7 +219,6 @@ class PemilikController extends Controller
 
     public function destroy($id)
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }

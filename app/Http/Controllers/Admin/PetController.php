@@ -13,7 +13,6 @@ class PetController extends Controller
 {
     public function index()
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
@@ -27,7 +26,6 @@ class PetController extends Controller
 
     public function create()
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
@@ -40,7 +38,6 @@ class PetController extends Controller
 
     public function store(Request $request)
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
@@ -83,7 +80,6 @@ class PetController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
@@ -115,7 +111,6 @@ class PetController extends Controller
 
     public function destroy($id)
     {
-        // Only allow admin (role 1)
         if (session('user_role') != 1) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }

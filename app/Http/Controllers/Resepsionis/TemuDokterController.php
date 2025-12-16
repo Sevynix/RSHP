@@ -11,16 +11,12 @@ use Illuminate\Support\Facades\Log;
 
 class TemuDokterController extends Controller
 {
-    /**
-     * Display a listing of temu dokter appointments
-     */
     public function index()
     {
         if (!in_array(session('user_role'), [4, 1])) { // Resepsionis or Admin
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 
-        // Get today's appointments
         $antrianList = DB::table('temu_dokter as td')
             ->leftJoin('pet as p', 'td.idpet', '=', 'p.idpet')
             ->leftJoin('pemilik as pm', 'p.idpemilik', '=', 'pm.idpemilik')
@@ -40,7 +36,6 @@ class TemuDokterController extends Controller
             ->orderBy('td.no_urut', 'asc')
             ->get();
 
-        // Get expired appointments (status menunggu tapi sudah lewat)
         $expiredList = DB::table('temu_dokter as td')
             ->leftJoin('pet as p', 'td.idpet', '=', 'p.idpet')
             ->leftJoin('pemilik as pm', 'p.idpemilik', '=', 'pm.idpemilik')
@@ -64,16 +59,12 @@ class TemuDokterController extends Controller
         return view('resepsionis.temudokter', compact('antrianList', 'expiredList'));
     }
 
-    /**
-     * Show the form for creating a new appointment
-     */
     public function create()
     {
         if (!in_array(session('user_role'), [4, 1])) {
             return redirect()->route('login')->with('error', 'Unauthorized access');
         }
 
-        // Get list of pets with their owners
         $petList = DB::table('pet as p')
             ->leftJoin('pemilik as pm', 'p.idpemilik', '=', 'pm.idpemilik')
             ->leftJoin('user as usr', 'pm.iduser', '=', 'usr.iduser')
@@ -97,9 +88,6 @@ class TemuDokterController extends Controller
         return view('resepsionis.addtemudokter', compact('petList', 'dokterList'));
     }
 
-    /**
-     * Store a newly created appointment
-     */
     public function store(Request $request)
     {
         if (!in_array(session('user_role'), [4, 1])) {
@@ -141,9 +129,6 @@ class TemuDokterController extends Controller
         }
     }
 
-    /**
-     * Mark appointment as completed
-     */
     public function complete(Request $request)
     {
         if (!in_array(session('user_role'), [4, 1])) {
@@ -152,17 +137,16 @@ class TemuDokterController extends Controller
 
         try {
             if ($request->has('no_urut')) {
-                // Complete by queue number (for today's appointments)
                 DB::table('temu_dokter')
                     ->whereDate('waktu_daftar', today())
                     ->where('no_urut', $request->no_urut)
-                    ->update(['status' => '2']); // Selesai
+                    ->update(['status' => '2']);
                     
             } elseif ($request->has('id_reservasi')) {
                 // Complete by reservation ID (for old appointments)
                 DB::table('temu_dokter')
                     ->where('idreservasi_dokter', $request->id_reservasi)
-                    ->update(['status' => '2']); // Selesai
+                    ->update(['status' => '2']);
             }
 
             return redirect()->route('resepsionis.temudokter.index')

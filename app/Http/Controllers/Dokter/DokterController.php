@@ -201,9 +201,6 @@ class DokterController extends Controller
         }
     }
 
-    /**
-     * Display list of patients (pets)
-     */
     public function dataPasien()
     {
         if (session('user_role') != 2) {

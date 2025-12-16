@@ -102,9 +102,6 @@ class PemilikController extends Controller
         return view('pemilik.dashboard', compact('pemilik', 'totalPets', 'totalJadwal', 'upcomingJadwal', 'totalMedicalRecords', 'recentPets', 'recentActivities'));
     }
 
-    /**
-     * Display jadwal temu dokter
-     */
     public function jadwal()
     {
         if (session('user_role') != 5) {
@@ -140,9 +137,6 @@ class PemilikController extends Controller
         return view('pemilik.jadwal', compact('jadwalList', 'pemilik', 'totalKunjungan', 'menunggu', 'selesai', 'hewanBerbeda'));
     }
 
-    /**
-     * Display rekam medis pets
-     */
     public function rekamMedis()
     {
         if (session('user_role') != 5) {
@@ -167,9 +161,6 @@ class PemilikController extends Controller
         return view('pemilik.rekam_medis', compact('pets', 'pemilik'));
     }
 
-    /**
-     * Display pemilik profile
-     */
     public function profil()
     {
         if (session('user_role') != 5) {
@@ -186,9 +177,6 @@ class PemilikController extends Controller
         return view('pemilik.profil', compact('pemilik', 'user'));
     }
 
-    /**
-     * Show edit profil form
-     */
     public function editProfil()
     {
         if (session('user_role') != 5) {
@@ -205,9 +193,6 @@ class PemilikController extends Controller
         return view('pemilik.edit_profil', compact('pemilik', 'user'));
     }
 
-    /**
-     * Update pemilik profile
-     */
     public function updateProfil(Request $request)
     {
         if (session('user_role') != 5) {
@@ -258,9 +243,6 @@ class PemilikController extends Controller
         }
     }
 
-    /**
-     * Display list of pets owned
-     */
     public function pets()
     {
         if (session('user_role') != 5) {

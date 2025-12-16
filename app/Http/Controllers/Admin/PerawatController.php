@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Perawat;
 use App\Models\User;
 use App\Models\Role;
@@ -12,9 +13,6 @@ use Illuminate\Support\Facades\Validator;
 
 class PerawatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $perawats = Perawat::with('user')
@@ -23,12 +21,8 @@ class PerawatController extends Controller
         return view('admin.perawat.index', compact('perawats'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        // Exclude users who are already perawat (not soft deleted)
         $availableUsers = User::whereNotIn('iduser', function ($query) {
             $query->select('id_user')
                 ->from('perawat')
@@ -41,9 +35,6 @@ class PerawatController extends Controller
         return view('admin.perawat.create', compact('availableUsers'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -64,22 +55,18 @@ class PerawatController extends Controller
 
         DB::beginTransaction();
         try {
-            // Create user
             $user = User::create([
                 'nama' => $request->nama,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
 
-            // Get perawat role
             $perawatRole = Role::where('nama_role', 'perawat')->first();
             
             if ($perawatRole) {
-                // Attach role to user
                 $user->roles()->attach($perawatRole->idrole, ['status' => '1']);
             }
 
-            // Create perawat profile
             Perawat::create([
                 'id_user' => $user->iduser,
                 'alamat' => $request->alamat,
@@ -99,9 +86,6 @@ class PerawatController extends Controller
         }
     }
 
-    /**
-     * Store perawat from existing user.
-     */
     public function storeExisting(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -120,18 +104,15 @@ class PerawatController extends Controller
 
         DB::beginTransaction();
         try {
-            // Check if user already has an active perawat record
             $existingPerawat = Perawat::where('id_user', $request->iduser)->first();
             if ($existingPerawat) {
                 return redirect()->back()
                     ->with('error', 'User ini sudah menjadi perawat');
             }
 
-            // Check if there's a soft deleted perawat record
             $deletedPerawat = Perawat::withTrashed()->where('id_user', $request->iduser)->onlyTrashed()->first();
             
             if ($deletedPerawat) {
-                // Restore the soft deleted record and update the data
                 $deletedPerawat->restore();
                 $deletedPerawat->update([
                     'alamat' => $request->alamat,
@@ -141,18 +122,15 @@ class PerawatController extends Controller
                 ]);
                 $message = 'berhasil dikembalikan sebagai perawat';
             } else {
-                // Get or create perawat role
                 $perawatRole = Role::where('nama_role', 'perawat')->first();
                 
                 if ($perawatRole) {
-                    // Attach role to user if not already attached
                     $user = User::find($request->iduser);
                     if (!$user->roles()->where('role_user.idrole', $perawatRole->idrole)->exists()) {
                         $user->roles()->attach($perawatRole->idrole, ['status' => '1']);
                     }
                 }
 
-                // Create new perawat record
                 Perawat::create([
                     'id_user' => $request->iduser,
                     'alamat' => $request->alamat,
@@ -176,27 +154,18 @@ class PerawatController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $perawat = Perawat::with('user')->findOrFail($id);
         return view('admin.perawat.show', compact('perawat'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $perawat = Perawat::with('user')->findOrFail($id);
         return view('admin.perawat.edit', compact('perawat'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $perawat = Perawat::findOrFail($id);
@@ -219,7 +188,6 @@ class PerawatController extends Controller
 
         DB::beginTransaction();
         try {
-            // Update user
             $userData = [
                 'nama' => $request->nama,
                 'email' => $request->email,
@@ -231,7 +199,6 @@ class PerawatController extends Controller
 
             $perawat->user->update($userData);
 
-            // Update perawat profile
             $perawat->update([
                 'alamat' => $request->alamat,
                 'no_hp' => $request->no_hp,
@@ -250,16 +217,12 @@ class PerawatController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
             $perawat = Perawat::with('user')->findOrFail($id);
             $userName = $perawat->user->nama;
 
-            // Only soft delete the perawat profile, keep the user
             $perawat->delete();
 
             return redirect()->route('admin.perawat.index')
